@@ -11,6 +11,8 @@ import pytest
 from operational_variance_toolkit.application.phase6 import build_reporting_bundle
 from operational_variance_toolkit.cli import main
 from operational_variance_toolkit.errors import DataValidationError, OutputExistsError
+from operational_variance_toolkit.reporting import executive
+from operational_variance_toolkit.reporting.exhibits import Exhibit
 from operational_variance_toolkit.reporting.frozen import (
     load_frozen_statistics,
     load_reconciliation_summary,
@@ -278,3 +280,85 @@ def test_build_reporting_cli_success_and_missing_input_error(tmp_path: Path, cap
         == 6
     )
     assert "Cannot read required JSON" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "disposition",
+        "limitation",
+        "target_selector",
+        "run_id",
+        "schema_version",
+        "sha256",
+        "statistics_version",
+        "caption",
+    ],
+)
+@pytest.mark.parametrize(
+    "text",
+    [
+        "<img src='https://invalid.example/image.png'/> & café",
+        "<link href='https://invalid.example/'>café</link>",
+        "&lt;img src='file:untrusted-image.png'/&gt;",
+    ],
+)
+def test_every_pdf_data_boundary_renders_literal_text_without_resources(
+    field: str, text: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from reportlab.platypus import Spacer, paraparser
+
+    statistics_path, reconstruction, _ = _inputs(tmp_path)
+    statistics = load_frozen_statistics(statistics_path)
+    summary = reporting_summary(statistics, load_reconciliation_summary(reconstruction))
+    if field in {"disposition", "limitation"}:
+        statistics.tables["hypothesis_evidence.csv"][0][field] = text
+    elif field == "sha256":
+        statistics.manifest["source"][field] = text
+    elif field == "statistics_version":
+        statistics.manifest[field] = text
+    elif field != "caption":
+        summary[field] = text
+    caption = text if field == "caption" else "ordinary caption"
+    exhibits = tuple(
+        Exhibit("figure.png", "Title", caption, caption, caption, caption) for _ in range(4)
+    )
+    original_state = repr((statistics.tables, statistics.manifest, summary))
+    paragraphs = []
+    original_paragraph = executive.Paragraph
+
+    def capture_paragraph(value, style):
+        paragraph = original_paragraph(value, style)
+        paragraphs.append(paragraph)
+        return paragraph
+
+    def forbid_inline_resource(*_args, **_kwargs):
+        pytest.fail("Dataset text attempted inline resource resolution")
+
+    monkeypatch.setattr(paraparser, "ImageReader", forbid_inline_resource)
+    monkeypatch.setattr(executive, "Paragraph", capture_paragraph)
+    # App-owned figure placement and PDF emission are outside this parser-boundary check.
+    monkeypatch.setattr(executive, "Image", lambda *_args, **_kwargs: Spacer(1, 1))
+    monkeypatch.setattr(executive.SimpleDocTemplate, "build", lambda *_args, **_kwargs: None)
+    executive._pdf(tmp_path / "report.pdf", summary, statistics, exhibits, tmp_path)
+
+    assert any(text in paragraph.getPlainText() for paragraph in paragraphs)
+    assert not any(
+        getattr(fragment, "link", None) or getattr(fragment, "cbDefn", None)
+        for paragraph in paragraphs
+        for fragment in paragraph.frags
+    )
+    assert repr((statistics.tables, statistics.manifest, summary)) == original_state
+    # Authored template formatting and line breaks still reach the parser as markup.
+    bold = next(
+        paragraph
+        for paragraph in paragraphs
+        if "The raw selector signal" in paragraph.getPlainText()
+    )
+    assert any(fragment.fontName.endswith("Bold") for fragment in bold.frags)
+    questions = next(
+        paragraph
+        for paragraph in paragraphs
+        if "1. Does direct observation" in paragraph.getPlainText()
+    )
+    assert any(getattr(fragment, "lineBreak", False) for fragment in questions.frags)

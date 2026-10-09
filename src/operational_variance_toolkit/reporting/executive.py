@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
@@ -358,7 +359,8 @@ def _pdf(
         Paragraph(
             f"The investigation contains {summary['eligible_picks']:,} eligible picks and "
             f"{summary['short_lines']} short lines across {summary['model_clusters']} trips. "
-            f"{summary['target_selector']} handled {summary['target_picks']} picks and "
+            f"{escape(str(summary['target_selector']))} handled "
+            f"{summary['target_picks']} picks and "
             f"{summary['target_short_lines']} short lines. Denominators and work-mix exposure are "
             "therefore essential to interpretation.",
             styles["Body"],
@@ -421,9 +423,11 @@ def _pdf(
         ),
         Paragraph("Technical Provenance", styles["H1"]),
         Paragraph(
-            f"Run {summary['run_id']}; schema {summary['schema_version']}; source SHA-256 "
-            f"{statistics.manifest['source']['sha256']}; statistics version "
-            f"{statistics.manifest['statistics_version']}. Source identity, reconstruction "
+            f"Run {escape(str(summary['run_id']))}; "
+            f"schema {escape(str(summary['schema_version']))}; source SHA-256 "
+            f"{escape(str(statistics.manifest['source']['sha256']))}; statistics version "
+            f"{escape(str(statistics.manifest['statistics_version']))}. "
+            "Source identity, reconstruction "
             "identity, analytical grain, and reconciliation validation passed. Ordinary analysis "
             "loaded ground truth: false.",
             styles["Small"],
@@ -567,8 +571,10 @@ def _report_image(path: Path, exhibit: Exhibit, styles: dict[str, ParagraphStyle
         [
             Image(str(path), width=6.8 * inch, height=3.7 * inch, kind="proportional"),
             Paragraph(
-                f"Population: {exhibit.population}. Denominator: {exhibit.denominator}. "
-                f"Source: {exhibit.source}. {exhibit.claim_boundary}",
+                escape(
+                    f"Population: {exhibit.population}. Denominator: {exhibit.denominator}. "
+                    f"Source: {exhibit.source}. {exhibit.claim_boundary}"
+                ),
                 styles["Caption"],
             ),
         ]
@@ -613,7 +619,10 @@ def _hypothesis_table(statistics: FrozenStatistics, styles: dict[str, ParagraphS
         for row in statistics.tables["hypothesis_evidence.csv"]
     )
     rendered = [
-        [Paragraph(value, styles["CellHead"] if index == 0 else styles["Cell"]) for value in row]
+        [
+            Paragraph(escape(str(value)), styles["CellHead"] if index == 0 else styles["Cell"])
+            for value in row
+        ]
         for index, row in enumerate(rows)
     ]
     table = Table(rendered, colWidths=[0.35 * inch, 3.15 * inch, 3.2 * inch], repeatRows=1)
