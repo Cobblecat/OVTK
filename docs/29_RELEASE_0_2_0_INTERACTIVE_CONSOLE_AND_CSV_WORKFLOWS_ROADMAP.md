@@ -1257,7 +1257,7 @@ Exports must:
 - write through a temporary file and atomic rename where practical;
 - calculate and display SHA-256;
 - report row count and destination; and
-- sanitize free-text cells against spreadsheet formula execution without silently altering canonical numeric/identifier fields.
+- encode hazardous strings in every spreadsheet-facing CSV column, including identifiers and references, as literal text; retain numeric values and stored canonical identifiers unchanged.
 
 #### Trace
 

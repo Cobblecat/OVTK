@@ -319,7 +319,7 @@ def test_transaction_and_report_exports_match_read_models_and_refuse_overwrite(
     assert report_result.row_count == len(report.rows)
 
 
-def test_csv_formula_safety_changes_free_text_only(tmp_path: Path) -> None:
+def test_csv_formula_safety_includes_identifiers_and_preserves_numbers(tmp_path: Path) -> None:
     path = tmp_path / "formula.csv"
     result = write_csv_atomic(
         path,
@@ -329,7 +329,7 @@ def test_csv_formula_safety_changes_free_text_only(tmp_path: Path) -> None:
 
     with path.open(encoding="utf-8", newline="") as handle:
         row = list(csv.reader(handle))[1]
-    assert row == ["=CANONICAL-ID", "-3", "'=2+2", "'+CALC"]
+    assert row == ["'=CANONICAL-ID", "-3", "'=2+2", "'+CALC"]
     assert result.sha256 == _sha256(path)
 
 

@@ -82,8 +82,8 @@ def write_csv_atomic(
             writer.writerow(columns)
             for row in materialized:
                 writer.writerow(
-                    _spreadsheet_safe_value(column, value)
-                    for column, value in zip(columns, row, strict=True)
+                    _spreadsheet_safe_value(value)
+                    for _column, value in zip(columns, row, strict=True)
                 )
             handle.flush()
             os.fsync(handle.fileno())
@@ -103,19 +103,22 @@ def write_csv_atomic(
     )
 
 
-def _spreadsheet_safe_value(column: str, value: object) -> object:
-    if not isinstance(value, str) or not value.startswith(("=", "+", "-", "@")):
+def _spreadsheet_safe_value(value: object) -> object:
+    """Encode hazardous string cells, including identifiers, as literal text."""
+
+    if not isinstance(value, str) or not value:
         return value
-    normalized = column.lower().replace(" ", "_")
-    if normalized.endswith("_id") or normalized in {
-        "item_id",
-        "location_id",
-        "source_reference",
-        "transaction_group",
-        "snapshot_batch",
-    }:
-        return value
-    return f"'{value}"
+    first_content = next(
+        (
+            character
+            for character in value
+            if not (character.isspace() or ord(character) < 32 or 127 <= ord(character) <= 159)
+        ),
+        "",
+    )
+    if first_content in {"=", "+", "-", "@"} or ord(value[0]) < 32 or 127 <= ord(value[0]) <= 159:
+        return f"'{value}"
+    return value
 
 
 def _readonly_repository(connection: sqlite3.Connection) -> WmsInquiryRepository:

@@ -76,6 +76,13 @@ uv run operational-variance-toolkit report `
 `inventory-reconciliation` compares live `inventory_master` with the selected
 WMS snapshot. It is not the independent transaction-replay reconstruction.
 
+WMS CSV exports prefix hazardous string cells with an apostrophe for spreadsheet
+review, including identifiers and references beginning with formula markers or
+leading tab/line-break characters. This presentation encoding leaves database
+values and numeric cells unchanged. Analytical CSV inputs retain their raw
+machine-readable format. Terminal output displays control characters as visible
+escapes; application-owned help lines and report column separators remain intact.
+
 ## Safe read-only SQL
 
 The reusable report views are ordinary WMS read models. Open SQLite in read-only
