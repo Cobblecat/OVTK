@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation and support guide
+    url: https://github.com/Cobblecat/OVTK/blob/main/SUPPORT.md
+    about: Start here for setup, workflow guidance, and report requirements.
+  - name: Private vulnerability report
+    url: https://github.com/Cobblecat/OVTK/security/advisories
+    about: Use Report a vulnerability to contact the maintainer privately.

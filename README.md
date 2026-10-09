@@ -66,6 +66,22 @@ dispositions without accepting restricted ground truth. The release layer builds
 the thin executed notebook, traceable figures, executive report, technical
 appendix, and separate leakage-checked source and optional truth archives.
 
+## Quick start
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use Python 3.14 or newer. From a new local checkout:
+
+```powershell
+git clone https://github.com/Cobblecat/OVTK.git
+cd OVTK
+uv sync --frozen
+uv run operational-variance-toolkit config-check --config configs/baseline.toml
+uv run operational-variance-toolkit generate --config configs/baseline.toml --output artifacts/data/quickstart_baseline.sqlite3
+uv run operational-variance-toolkit validate --database artifacts/data/quickstart_baseline.sqlite3
+uv run operational-variance-toolkit console --database artifacts/data/quickstart_baseline.sqlite3
+```
+
+Choose a new output path when repeating generation. At the console prompt, use `help` to list commands and `exit` to leave the session. This workflow generates a baseline and does not require an existing sample database.
+
 ## Public command examples
 
 Commands refuse to overwrite existing output files or directories. Choose new paths for each run.
@@ -88,29 +104,23 @@ uv run operational-variance-toolkit build-reporting --statistics artifacts/analy
 
 `init-db` is the legacy database initializer; use `init-wms` for the schema-3 WMS foundation.
 
-## Interactive read-only console
+## Interactive console
 
-Launch the Release 0.2.0 Phase 1 console from source:
+Launch the current source console:
 
 ```powershell
 uv run operational-variance-toolkit console
-```
-
-The no-database start menu requires an explicit choice to open the included
-sample, enter another schema-3 database path, view help, or exit. Direct startup
-is also available:
-
-```powershell
 uv run operational-variance-toolkit console --database "C:\path with spaces\warehouse.sqlite3"
-uv run operational-variance-toolkit console --sample
 uv run operational-variance-toolkit console --no-style
 ```
 
-Phase 1 provides `open`, `sample`, `close`, `status`, `validate`, `describe`,
-`version`, `help`, `history`, `clear`, `exit`, and `quit`. Existing schema-3
-databases are opened with SQLite read-only and query-only protections. Inquiry,
-reports, exports, trace, sandboxes, CSV workflows, and WMS mutation remain later
-release phases.
+The no-database menu requires an explicit database selection. Use a generated schema-3 baseline, such as the quick-start output above. The `sample` command and `--sample` option require the accepted local baseline artifact; a bundled sample is a later packaging deliverable.
+
+The console supports read-only inquiry, 12 standard reports, CSV exports, transaction tracing, display settings, and the basic session commands. Source databases open with SQLite read-only and query-only protections.
+
+The current source also supports creating and opening verified schema-3.1.0 sandbox copies. The console connection remains query-only, and this phase adds no operational mutation. CSV maintenance preview/apply, later write workflows, and final Windows packaging remain pending.
+
+Release 0.2.0 Phase 3 engineering is complete; the displayed package version remains `0.1.0` pending the release gate. See [project status](PROJECT_STATUS.md) and the [console roadmap](docs/29_RELEASE_0_2_0_INTERACTIVE_CONSOLE_AND_CSV_WORKFLOWS_ROADMAP.md) for the detailed boundaries.
 
 ## Release Contents
 
@@ -148,19 +158,25 @@ packet is included.
 
 Start with:
 
-1. `PROJECT_STATUS.md`
-2. `docs/01_PROJECT_CHARTER.md`
-3. `docs/02_REQUIREMENTS_AND_ACCEPTANCE.md`
-4. `docs/03_ARCHITECTURE.md`
-5. `docs/04_DATA_MODEL_AND_DICTIONARY.md`
-6. `docs/09_IMPLEMENTATION_ROADMAP.md`
-7. `docs/29_RELEASE_0_2_0_INTERACTIVE_CONSOLE_AND_CSV_WORKFLOWS_ROADMAP.md`
-8. `docs/30_RELEASE_0_2_0_PHASE_0_AUDIT_AND_CONTRACTS.md`
-9. `docs/14_STATISTICAL_GUARDRAILS.md`
-10. `docs/26_PHASE_5_ANALYSIS_CONTRACT.md`
-11. `docs/27_WMS_USER_AND_SQL_GUIDE.md`
-12. `docs/28_RELEASE_AND_REPRODUCTION_GUIDE.md`
+1. [PROJECT_STATUS.md](PROJECT_STATUS.md)
+2. [docs/01_PROJECT_CHARTER.md](docs/01_PROJECT_CHARTER.md)
+3. [docs/02_REQUIREMENTS_AND_ACCEPTANCE.md](docs/02_REQUIREMENTS_AND_ACCEPTANCE.md)
+4. [docs/03_ARCHITECTURE.md](docs/03_ARCHITECTURE.md)
+5. [docs/04_DATA_MODEL_AND_DICTIONARY.md](docs/04_DATA_MODEL_AND_DICTIONARY.md)
+6. [docs/09_IMPLEMENTATION_ROADMAP.md](docs/09_IMPLEMENTATION_ROADMAP.md)
+7. [docs/29_RELEASE_0_2_0_INTERACTIVE_CONSOLE_AND_CSV_WORKFLOWS_ROADMAP.md](docs/29_RELEASE_0_2_0_INTERACTIVE_CONSOLE_AND_CSV_WORKFLOWS_ROADMAP.md)
+8. [docs/30_RELEASE_0_2_0_PHASE_0_AUDIT_AND_CONTRACTS.md](docs/30_RELEASE_0_2_0_PHASE_0_AUDIT_AND_CONTRACTS.md)
+9. [docs/14_STATISTICAL_GUARDRAILS.md](docs/14_STATISTICAL_GUARDRAILS.md)
+10. [docs/26_PHASE_5_ANALYSIS_CONTRACT.md](docs/26_PHASE_5_ANALYSIS_CONTRACT.md)
+11. [docs/27_WMS_USER_AND_SQL_GUIDE.md](docs/27_WMS_USER_AND_SQL_GUIDE.md)
+12. [docs/28_RELEASE_AND_REPRODUCTION_GUIDE.md](docs/28_RELEASE_AND_REPRODUCTION_GUIDE.md)
 
 ## Data policy
 
 All data are synthetic. No real employer records, employee identities, proprietary screenshots, credentials, or confidential system details are used.
+
+## Contributing and help
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks and project contracts, [SUPPORT.md](SUPPORT.md) for questions and bug reports, and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for participation expectations. Accessibility information and feedback guidance are in [ACCESSIBILITY.md](ACCESSIBILITY.md).
+
+Report potential vulnerabilities privately using [SECURITY.md](SECURITY.md).

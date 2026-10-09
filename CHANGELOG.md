@@ -4,6 +4,12 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+### Repository documentation - 2026-10-09
+
+- Add security, support, conduct, and accessibility guidance with structured issue and pull request templates.
+- Expand contribution instructions, add a fresh-checkout quick start, and align the README console description with completed Phase 2 and Phase 3 source capabilities.
+- Populate repository description, documentation link, topics, and social preview; enable private vulnerability reporting.
+
 ### Security fixes - 2026-10-09
 
 - Escape supplied report text at PDF Paragraph boundaries while preserving application-owned markup and figure handling. Fixed in [f70d93e](https://github.com/Cobblecat/OVTK/commit/f70d93e08d893e994a850c0ea658f73bb8410074); [issue #1](https://github.com/Cobblecat/OVTK/issues/1) closed as completed.
