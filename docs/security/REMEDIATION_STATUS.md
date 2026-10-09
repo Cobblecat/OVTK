@@ -14,7 +14,7 @@ The foundations are committed on `remediation/phase1-foundations`, based on [`59
 
 Phase 2 may implement and validate the approved F3/F7/F8 database group. Product resource ceilings and legitimate-workload support remain unresolved; independent identity, identifier and algorithm work and bounded synthetic calibration may proceed, but G2 cannot pass or dependent work advance on invented defaults. The approved performance policy permits no more than 10% ordinary-workload median runtime regression after accounting for measurement noise, with no unexplained peak-memory growth; absolute limits and headroom remain subject to calibration and approval. Stop affected work and report failed gates, blocking decisions or new issues for review. The private acceptance record is retained with SHA-256 `03e3f5700fdd0515aa754999da3dbc8d2d1a970dd238e1635dc555f0f9e46288`.
 
-The Windows-first design remains feasible. Native POSIX publication qualification is deferred because an approved native runner has not been established. Deferred qualification is not a passing result.
+On 2026-10-09, the owner removed Ubuntu support qualification from the required remediation gates. G1-P is removed from this remediation's acceptance dependencies, and no native Ubuntu/POSIX runner or qualification result is required for phase advancement or final Windows-candidate acceptance. G1-W and all applicable Windows security, compatibility, prior-patch, workflow, and performance gates remain required. Ubuntu support remains unqualified and outside the required scope; this decision establishes no new test result or phase acceptance.
 
 ## Finding coverage
 
@@ -49,14 +49,14 @@ At the Phase 1 reviewed range, the earlier production sinks are unchanged and 11
 | --- | --- | --- |
 | 0 / G0 | Evidence, affected compatibility contracts, ownership inventory and decisions. | Recorded passed for the contracts needed by Phase 1; dependent resource/spreadsheet decisions remain unresolved. |
 | 1 / G1-W | Shared read, codec-reader, publication and routing foundations. | Five commits below; corrected foundations accepted for the recorded Windows configuration. |
-| G1-P | Native POSIX foundation qualification. | Deferred and unpassed; no approved native runner established. |
+| G1-P | Native POSIX foundation qualification. | Removed from required remediation gates by the owner's 2026-10-09 decision; unqualified and optional future work. |
 | 2 / G2 | Database identity, snapshots, SQL identifiers and bounded analysis. | Entry approved; documentation prerequisite satisfied. Implementation and G2 acceptance remain pending, including dependent resource/workload decisions. |
 | 3 / G3 | Versioned analytical writers and spreadsheet qualification. | Not started; consumer matrix approval and evidence required. |
 | 4 / G4 | Captured reporting evidence and truthful claims. | Not started. |
 | 5 / G5 | Output producer migration and no-replace publication. | Not started. |
 | 6 / G6 | Confined release capture and release publication. | Not started; five-file layout compatibility decision remains pending. |
 | 7 / G7 | Earlier-patch regression across the changed architecture. | Not started; prior-patch checks also apply during earlier phases. |
-| 8 / G8 | Complete workflow, platform and performance qualification. | Not started. |
+| 8 / G8 | Complete Windows workflow, platform and performance qualification. | Not started; Ubuntu qualification is outside the required scope. |
 | 9 / G9 | Evidence accounting and owner acceptance. | Not started. |
 
 Phase 1 commits:
@@ -73,7 +73,7 @@ Keep completed phases and corrections in separately scoped, traceable commits. R
 
 See [Phase 1 gate record](PHASE1_GATE_RECORD.md) and [machine-readable gate evidence](phase1-gates.json).
 
-Those records preserve the implementer's submission before the independent correction review. The later acceptance decision above supersedes their advancement denial; the recorded commands, results and earlier failures remain unchanged.
+Those records preserve the implementer's submission before the independent correction review. The later acceptance and owner platform-scope decisions above supersede their earlier advancement denial and POSIX gate dependency; the recorded commands, results and earlier failures remain unchanged.
 
 - Recorded environment: Windows 11 Home/Core 25H2 x64 build 26200.9457, local fixed NTFS, CPython 3.14.6, SQLite 3.50.4 and locked dependencies.
 - Pre-correction cumulative suite: 520 tests passed. Corrected candidate: 266 component and 540 cumulative tests passed, zero failures/errors/skips, one existing Windows/ZMQ warning. Lint, formatting and whitespace checks passed. Acceptance review inspected these receipts without rerunning OVTK tests.
@@ -87,7 +87,7 @@ These are local recorded results for the candidate source represented by the rev
 ## Compatibility, support and unresolved decisions
 
 - Initial migrated-publication qualification targets Windows 11 25H2 Home/Core **x64**, local fixed **NTFS**, and **CPython 3.14.x**. Exact tested versions are recorded above. The corrected guard admits only a successful native-process/AMD64-host result. Substituted rejection cases do not qualify other native architectures or interpreters; approval of a configuration family is not evidence that every build passed.
-- Native Ubuntu Server 26.04.1 LTS amd64/ext4/CPython 3.14.x is the intended future POSIX target. Migrated publication/release workflows must remain disabled there until native and applicable later gates pass. Mocks, WSL and containers do not satisfy the approved native qualification requirement. This does not disable unrelated compatible read-only workflows.
+- Ubuntu/native POSIX qualification is optional future work outside this remediation's required acceptance scope. A future support target requires separate approval and native component, interaction, prior-patch and complete-workflow evidence before enablement or a support claim. Migrated publication/release workflows reject unqualified platforms/filesystems; compatible unrelated read-only workflows retain their existing behavior.
 - Approved legacy format/schema tuples retain their existing workflow support. Legacy text is not decoded by guessing a prefix. Unknown/contradictory declarations reject; no date cutoff or automatic removal is approved. Historical artifacts needing preservation have not been fully inventoried.
 - Canonical database values, numerical results and deterministic artifacts remain compatibility requirements. PDF, terminal, WMS presentation CSV and analytical CSV encoding policies have distinct sinks and must not be stacked.
 - Product resource ceilings, legitimate normal/largest workloads and spreadsheet application/build/locale/import-mode support remain unresolved for their dependent gates. The approved relative performance policy above requires measured calibration; absolute resource limits and support claims are not established by that approval.

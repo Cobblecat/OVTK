@@ -72,7 +72,7 @@ A separate security remediation is in progress. Its phase numbers describe secur
 
 The earlier PDF text, WMS CSV, and terminal escaping fixes remain part of the compatibility and regression requirements. Analytical CSV writer changes, bound reporting, database workflow adoption, output publication migration, and confined release capture require their later gates. A source commit does not establish that a downloaded ZIP contains the fix.
 
-See [security remediation status](docs/security/REMEDIATION_STATUS.md) for finding coverage, commits, review decisions, evidence, and platform limitations, and [SECURITY.md](SECURITY.md) for private reporting. The initial publication qualification targets Windows 11 25H2 Home/Core x64, local fixed NTFS, and CPython 3.14.x. Native POSIX qualification remains deferred; this is not a claim that all current workflows or later Windows builds have been qualified.
+See [security remediation status](docs/security/REMEDIATION_STATUS.md) for finding coverage, commits, review decisions, evidence, and platform limitations, and [SECURITY.md](SECURITY.md) for private reporting. Remediation qualification targets Windows 11 25H2 Home/Core x64, local fixed NTFS, and CPython 3.14.x. On 2026-10-09, the owner removed Ubuntu/native POSIX qualification from the remediation acceptance gates. Ubuntu support is unqualified and outside this remediation's required scope; migrated publication and release workflows reject unqualified configurations. Qualification claims remain limited to the configurations and workflows actually tested.
 
 ## Quick start
 

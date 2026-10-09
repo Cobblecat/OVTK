@@ -24,7 +24,7 @@ If private reporting is unavailable, open an issue requesting a private contact 
 
 Security fixes are recorded in the [changelog](CHANGELOG.md) with their source commits. Reports against current `main` are welcome; identify the exact revision so the behavior can be reproduced.
 
-The separate [security remediation status](docs/security/REMEDIATION_STATUS.md) tracks eight open findings, preservation of the three earlier patches, and the phase review decisions. Foundations committed to a remediation branch are not finding closure or acceptance of every workflow. The status document distinguishes recorded test results from independent review and deferred qualification.
+The separate [security remediation status](docs/security/REMEDIATION_STATUS.md) tracks eight open findings, preservation of the three earlier patches, and the phase review decisions. Foundations committed to a remediation branch are not finding closure or acceptance of every workflow. The status document distinguishes recorded test results from independent review and states the current platform scope.
 
 A source fix does not establish that an older ZIP or generated release artifact contains the fix. Historical version `0.1.0` archives and preparation snapshots must be checked against their recorded revision. No maintained backport schedule or response-time guarantee is established.
 
