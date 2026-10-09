@@ -20,16 +20,18 @@ On 2026-10-09, the owner removed Ubuntu support qualification from the required 
 
 F1-F8 identify the original assessment findings; they are **not GitHub issue numbers**. A foundation supporting a finding does not establish that its affected callers have migrated or that the finding is fixed.
 
-| Finding | Required control | Planned security phase | Current disposition |
-| --- | --- | --- | --- |
-| F1 — Release symlink following | Confined regular-file capture into private staging; derive archive inventories from captured bytes. | 6, with the F1/F6 interaction | Open; release capture has not migrated. |
-| F2 — Analytical CSV formula injection | Manifest-declared reversible analytical serialization, strict readers, compatible writer migration, and real spreadsheet qualification. | 3, with the F2/F4/F5 interaction | Open; codec readers and manifest recognition exist, writer migration is pending. The conditional Phase 6 frozen-matrix CSV route belongs to F2. |
-| F3 — Mixed-run WMS identity | Exact-one-run validation and accepted identity on the same read snapshot used for queries. | 2 | Open; the shared snapshot foundation exists, production workflow adoption is pending. |
-| F4 — Unbound reconciliation reporting | Capture the accepted evidence set once, verify file/manifest/run/source/role binding, and use only captured inputs. | 4 | Open; reporting capture and binding are pending. |
-| F5 — Unconditional empirical conclusions | Derive supported claims from one frozen evidence result and reuse it across reporting surfaces. | 4 | Open; claim derivation and reporting migration are pending. |
-| F6 — Non-atomic output reservation | Invocation-owned private staging, qualified no-replace publication, ownership-safe cleanup, and fail-closed pair readiness. | 5, supporting 6 | Open; corrected foundation is accepted for the recorded Windows configuration, producer adoption is pending. |
-| F7 — Unbounded QA/adjustment join | Exact bounded-processing replacement, cumulative work limits, and differential numerical/ordering checks. | 2 | Open; supplied limit contracts exist, algorithm replacement and approved product profiles are pending. |
-| F8 — Schema-derived SQL identifier injection | Correct identifier handling and object policy within the accepted, bounded read boundary. | 2 | Open; snapshot infrastructure exists, identifier/object-policy adoption is pending. |
+| Finding | GitHub issue | Required control | Planned security phase | Current disposition |
+| --- | --- | --- | --- | --- |
+| F1 — Release symlink following | [#4](https://github.com/Cobblecat/OVTK/issues/4) | Confined regular-file capture into private staging; derive archive inventories from captured bytes. | 6, with the F1/F6 interaction | Open; release capture has not migrated. |
+| F2 — Analytical CSV formula injection | [#5](https://github.com/Cobblecat/OVTK/issues/5) | Manifest-declared reversible analytical serialization, strict readers, compatible writer migration, and real spreadsheet qualification. | 3, with the F2/F4/F5 interaction | Open; codec readers and manifest recognition exist, writer migration is pending. The conditional Phase 6 frozen-matrix CSV route belongs to F2. |
+| F3 — Mixed-run WMS identity | [#6](https://github.com/Cobblecat/OVTK/issues/6) | Exact-one-run validation and accepted identity on the same read snapshot used for queries. | 2 | Open; the shared snapshot foundation exists, production workflow adoption is pending. |
+| F4 — Unbound reconciliation reporting | [#7](https://github.com/Cobblecat/OVTK/issues/7) | Capture the accepted evidence set once, verify file/manifest/run/source/role binding, and use only captured inputs. | 4 | Open; reporting capture and binding are pending. |
+| F5 — Unconditional empirical conclusions | [#8](https://github.com/Cobblecat/OVTK/issues/8) | Derive supported claims from one frozen evidence result and reuse it across reporting surfaces. | 4 | Open; claim derivation and reporting migration are pending. |
+| F6 — Non-atomic output reservation | [#9](https://github.com/Cobblecat/OVTK/issues/9) | Invocation-owned private staging, qualified no-replace publication, ownership-safe cleanup, and fail-closed pair readiness. | 5, supporting 6 | Open; corrected foundation is accepted for the recorded Windows configuration, producer adoption is pending. |
+| F7 — Unbounded QA/adjustment join | [#10](https://github.com/Cobblecat/OVTK/issues/10) | Exact bounded-processing replacement, cumulative work limits, and differential numerical/ordering checks. | 2 | Open; supplied limit contracts exist, algorithm replacement and approved product profiles are pending. |
+| F8 — Schema-derived SQL identifier injection | [#11](https://github.com/Cobblecat/OVTK/issues/11) | Correct identifier handling and object policy within the accepted, bounded read boundary. | 2 | Open; snapshot infrastructure exists, identifier/object-policy adoption is pending. |
+
+The eight issues are separate redacted public tracking records. Fuller technical disclosure is planned after implementation, required verification and review. Issue creation does not establish a verified fix, an affected release range or a patched distribution. Eight advisory texts have been prepared locally; no GitHub advisory has been created or published. Advisory source, version and authoring requirements remain unresolved.
 
 ## Earlier source fixes and regression requirements
 

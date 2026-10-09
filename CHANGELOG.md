@@ -17,6 +17,10 @@ All notable changes to this project are documented here.
 
 - Record the owner's decision to remove Ubuntu/native POSIX qualification from the required remediation gates, including final acceptance. Windows qualification and all applicable security, compatibility, prior-patch, workflow, and performance gates remain required. Ubuntu support is unqualified; any future enablement requires separate approval and evidence. The decision changes the acceptance scope, with no application behavior or historical test evidence changed.
 
+### Security issue tracking - 2026-10-09
+
+- Add eight separate redacted public tracking issues, [#4](https://github.com/Cobblecat/OVTK/issues/4) through [#11](https://github.com/Cobblecat/OVTK/issues/11), mapped individually in the [security remediation status](docs/security/REMEDIATION_STATUS.md). All eight findings remain open. Fuller technical disclosure is planned after implementation, required verification and review; the three earlier closed issues remain separate regression obligations. Eight advisory texts are prepared locally, with no GitHub advisory created or published and no affected/fixed release range established.
+
 ### Security remediation evidence and limitations - 2026-10-09
 
 - The recorded Phase 1 candidate run passed 520 tests, with one Windows/ZMQ warning, on Windows 11 Home/Core 25H2 x64 build 26200.9457, local fixed NTFS, CPython 3.14.6, and SQLite 3.50.4. Recorded lint, formatting, and whitespace checks passed. Acceptance review inspected results and source identity without rerunning the test suite.
