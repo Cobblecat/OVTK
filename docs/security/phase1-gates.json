@@ -23,7 +23,7 @@
         "docs/security/phase1-gates.json"
       ],
       "limitations": "Substituted architecture/implementation probes test decision logic only; no native x86/ARM64/non-CPython qualification. Existing platform deferrals remain.",
-      "docs_other_task": [
+      "related_documents": [
         "CHANGELOG.md",
         "README.md",
         "SECURITY.md",
@@ -95,57 +95,57 @@
       "commands": [
         {
           "command": [
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
-            "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\compare_baseline.py"
+            "<repository>\\.venv\\Scripts\\python.exe",
+            "<evidence>\\artifacts\\phase1\\qualifier-correction\\cumulative\\compare_baseline.py"
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 2.4159729999955744
         },
         {
           "command": [
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
-            "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\check_prior_tests_utf8.py"
+            "<repository>\\.venv\\Scripts\\python.exe",
+            "<evidence>\\artifacts\\phase1\\qualifier-correction\\cumulative\\check_prior_tests_utf8.py"
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 1.1446286999853328
         },
         {
           "command": [
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "<repository>\\.venv\\Scripts\\python.exe",
             "-m",
             "pytest",
             "--maxfail=1",
-            "--basetemp=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\full-temp",
-            "--junitxml=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\full.xml"
+            "--basetemp=<evidence>\\artifacts\\phase1\\qualifier-correction\\cumulative\\full-temp",
+            "--junitxml=<evidence>\\artifacts\\phase1\\qualifier-correction\\cumulative\\full.xml"
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 435.42956419999246
         },
         {
           "command": [
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "<repository>\\.venv\\Scripts\\python.exe",
             "-m",
             "ruff",
             "check",
             "."
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 0.3039282000390813
         },
         {
           "command": [
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "<repository>\\.venv\\Scripts\\python.exe",
             "-m",
             "ruff",
             "format",
             "--check",
             "."
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 0.2844112999737263
         },
@@ -155,11 +155,11 @@
             "-c",
             "core.autocrlf=false",
             "-C",
-            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+            "<repository>",
             "diff",
             "--check"
           ],
-          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "cwd": "<repository>",
           "exit_code": 0,
           "elapsed_seconds": 0.09157689998392016
         }
@@ -503,48 +503,48 @@
   "commands": [
     {
       "command": [
-        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
-        "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\compare_baseline.py"
+        "<repository>\\.venv\\Scripts\\python.exe",
+        "<evidence>\\artifacts\\phase1\\cumulative\\compare_baseline.py"
       ],
-      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "cwd": "<repository>",
       "exit_code": 0,
       "elapsed_seconds": 3.0164639999857172
     },
     {
       "command": [
-        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "<repository>\\.venv\\Scripts\\python.exe",
         "-m",
         "pytest",
         "--maxfail=1",
-        "--basetemp=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\full-temp",
-        "--junitxml=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\full.xml"
+        "--basetemp=<evidence>\\artifacts\\phase1\\cumulative\\full-temp",
+        "--junitxml=<evidence>\\artifacts\\phase1\\cumulative\\full.xml"
       ],
-      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "cwd": "<repository>",
       "exit_code": 0,
       "elapsed_seconds": 441.87444390007295
     },
     {
       "command": [
-        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "<repository>\\.venv\\Scripts\\python.exe",
         "-m",
         "ruff",
         "check",
         "."
       ],
-      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "cwd": "<repository>",
       "exit_code": 0,
       "elapsed_seconds": 0.36160950001794845
     },
     {
       "command": [
-        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "<repository>\\.venv\\Scripts\\python.exe",
         "-m",
         "ruff",
         "format",
         "--check",
         "."
       ],
-      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "cwd": "<repository>",
       "exit_code": 0,
       "elapsed_seconds": 0.2870116999838501
     },
@@ -554,11 +554,11 @@
         "-c",
         "core.autocrlf=false",
         "-C",
-        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+        "<repository>",
         "diff",
         "--check"
       ],
-      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "cwd": "<repository>",
       "exit_code": 0,
       "elapsed_seconds": 0.14413140004035085
     }
@@ -963,8 +963,8 @@
     }
   ],
   "evidence": {
-    "task": "01a120b5-ba07-70e3-8295-72dbedb1d4dc",
-    "storage": "Codex Security persistent supplemental artifacts, outside the source checkout",
+    "storage": "Private validation evidence outside the source checkout",
+    "command_path_notation": "<repository> and <evidence> replace machine-specific roots in this public summary. Original absolute argv and working directories remain in the hashed execution receipts.",
     "phase0_receipts": [
       {
         "path": "artifacts/phase0/obtain_baseline_history.py",

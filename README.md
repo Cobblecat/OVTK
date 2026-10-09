@@ -68,7 +68,7 @@ appendix, and separate leakage-checked source and optional truth archives.
 
 ### Security remediation status
 
-A separate security remediation is in progress. Its phase numbers describe security work and are distinct from the feature milestones above. Phase 1 foundations, including the CPython/native x64 publication qualifier, were accepted at [`5596678`](https://github.com/Cobblecat/OVTK/commit/5596678448e54a20b1f3ec7fa2d9f3caaed9ec0c) on `remediation/phase1-foundations` for the recorded Windows configuration. Phase 2 entry is approved after this documentation update is integrated. The eight findings are not yet closed.
+A separate security remediation is in progress. Its phase numbers describe security work and are distinct from the feature milestones above. Phase 1 foundations, including the CPython/native x64 publication qualifier, were accepted at [`5596678`](https://github.com/Cobblecat/OVTK/commit/5596678448e54a20b1f3ec7fa2d9f3caaed9ec0c) on `remediation/phase1-foundations` for the recorded Windows configuration. Phase 2 entry is approved; implementation and acceptance remain pending. The eight findings are not yet closed.
 
 The earlier PDF text, WMS CSV, and terminal escaping fixes remain part of the compatibility and regression requirements. Analytical CSV writer changes, bound reporting, database workflow adoption, output publication migration, and confined release capture require their later gates. A source commit does not establish that a downloaded ZIP contains the fix.
 

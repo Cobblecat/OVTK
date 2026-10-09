@@ -6,12 +6,15 @@ Baseline: `5931b15c1838e83c37217e385e74a6db13afe6bf`, tree
 `d64f805d62b22b0610d889df063662d43674907a`. Genuine history was fetched from
 Cobblecat/OVTK and all three earlier security patches were verified ancestors.
 
-G0 is recorded passed for the affected Phase 1 contracts. The reviewer denied
+This record preserves the implementation submission before final acceptance.
+The later decision is recorded in [remediation status](REMEDIATION_STATUS.md).
+
+G0 is recorded passed for the affected Phase 1 contracts. Review denied
 advancement at `1876a476931871ec95b59615cea8ad4f7888d015` because the
 publication qualifier did not enforce R2's CPython/native x64 restriction.
-The bounded correction below passes implementation checks; independent Phase 1
-acceptance remains with review task `01a11f27-1b05-7ea2-b78a-33ceaaf90d49`.
-Phase 2 remains denied and has not started. G1-P remains deferred and unpassed.
+The bounded correction below passes implementation checks. At submission,
+independent Phase 1 acceptance was pending, and Phase 2 remained denied and
+had not started. G1-P remains deferred and unpassed.
 
 ## Changes and boundaries
 
@@ -87,9 +90,8 @@ G0 evidence includes 1,118 conservatively inventoried candidate sites across
 94 baseline source modules, 20 notebook cells, four schema versions, 19 CLI
 help/diagnostic entries, manifests, legacy reader behavior, numerical fixtures,
 deterministic hashes and prior-patch contracts. Each candidate has a retained,
-migration or exclusion disposition. Full evidence is retained through Codex
-Security supplemental storage for task
-`01a120b5-ba07-70e3-8295-72dbedb1d4dc`; the gate JSON lists digests.
+migration or exclusion disposition. Full evidence is retained in private
+validation storage outside the source checkout; the gate JSON lists digests.
 Generated databases, CSV goldens, reports, virtual environments and scratch
 files remain outside commits.
 
@@ -147,14 +149,14 @@ No product test or security assertion was waived and no executed source changed.
 
 No no-replace, staging ownership, pair readiness, reader or prior-patch policy
 was changed. All dependent owner decisions and G1-P remain pending or deferred
-as recorded below. The reviewer's owner packet is advisory, not an amendment
+as recorded below. The decision recommendations are advisory, not an amendment
 or approval of resource ceilings, spreadsheet targets or release behavior.
 
 ## Earlier failure accounting
 
 The first component run stopped after 57 passes and 1 failure. The sharing
 fixture used an unchecked FILE_READ_ATTRIBUTES handle, which did not establish
-the assumed delete-sharing conflict. Work stopped and the reviewer authorized
+the assumed delete-sharing conflict. Work stopped, and review authorized
 a bounded correction (decision SHA-256
 `0b1add96425a676072ee7937da41749a0d7574c532e1978b4e5fd36464dd8114`).
 The corrected fixture verifies a GENERIC_READ handle, independently probes
