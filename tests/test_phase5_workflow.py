@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import base64
+import csv
 import hashlib
 import json
+import shutil
 from datetime import UTC, datetime
 from pathlib import Path
 
+import pandas as pd
 import pytest
 
 from operational_variance_toolkit.analysis.statistical_config import load_analysis_config
@@ -20,8 +24,41 @@ from operational_variance_toolkit.errors import (
     OutputExistsError,
 )
 from operational_variance_toolkit.storage import statistical_outputs
+from operational_variance_toolkit.storage.statistical_sources import load_statistical_source
 
 NOW = datetime(2026, 8, 2, 15, tzinfo=UTC)
+
+
+def test_declared_codec_source_preserves_dtypes_order_missing_and_values(
+    phase5_sources, tmp_path: Path
+) -> None:
+    database = phase5_sources["investigation_database"]
+    original = phase5_sources["investigation_reconstruction"]
+    legacy = load_statistical_source(database, original)
+    encoded = tmp_path / "encoded-reconstruction"
+    shutil.copytree(original, encoded)
+    manifest = json.loads((encoded / "analysis_manifest.json").read_text())
+    manifest.update(csv_codec="codec-v1", artifact_format_version="2.0.0")
+    for path in encoded.glob("*.csv"):
+        frame = pd.read_csv(path)
+        text_columns = {name for name in frame if pd.api.types.is_string_dtype(frame[name].dtype)}
+        with path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            fields, rows = reader.fieldnames, list(reader)
+        for row in rows:
+            for name in text_columns:
+                if row[name]:
+                    row[name] = "OVTK1_" + base64.urlsafe_b64encode(row[name].encode()).decode()
+        with path.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(rows)
+        manifest["outputs"][path.name]["sha256"] = _sha256(path)
+    (encoded / "analysis_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    accepted = load_statistical_source(database, encoded)
+    assert accepted.metadata == legacy.metadata
+    for name in legacy.tables:
+        pd.testing.assert_frame_equal(accepted.tables[name], legacy.tables[name])
 
 
 def _sha256(path: Path) -> str:

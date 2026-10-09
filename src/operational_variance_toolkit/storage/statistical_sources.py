@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 
 from operational_variance_toolkit.errors import DatabaseError, DataValidationError
+from operational_variance_toolkit.storage.csv_codec import decode_csv_text, manifest_csv_codec
 from operational_variance_toolkit.storage.database import connect_readonly_database
 from operational_variance_toolkit.wms.storage.repositories import WmsFoundationRepository
 
@@ -121,11 +122,19 @@ def load_statistical_source(
     except (OSError, json.JSONDecodeError) as exc:
         raise DataValidationError(f"Malformed reconstruction manifest: {manifest_path}") from exc
 
+    codec = manifest_csv_codec(manifest, kind="reconstruction")
     _validate_manifest(manifest, source_sha256, reconstruction)
     tables = {
         Path(file_name).stem: pd.read_csv(reconstruction / file_name)
         for file_name in RECONSTRUCTION_FILES
     }
+    if codec is not None:
+        for frame in tables.values():
+            for column in frame:
+                if pd.api.types.is_string_dtype(frame[column].dtype):
+                    frame[column] = frame[column].map(
+                        lambda value: decode_csv_text(value, codec), na_action="ignore"
+                    )
 
     try:
         with closing(connect_readonly_database(database)) as connection:

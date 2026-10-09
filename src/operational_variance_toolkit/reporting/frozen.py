@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from operational_variance_toolkit.errors import DataValidationError
+from operational_variance_toolkit.storage.csv_codec import decode_csv_text, manifest_csv_codec
 
 STATISTICAL_TABLES = (
     "descriptive_metrics.csv",
@@ -67,6 +68,7 @@ def load_frozen_statistics(path: str | Path) -> FrozenStatistics:
 
     root = Path(path).resolve()
     manifest = _load_json(root / "analysis_manifest.json")
+    codec = manifest_csv_codec(manifest, kind="statistics")
     diagnostics = _load_json(root / "model_diagnostics.json")
     validation = manifest.get("validation", {})
     if validation.get("status") != "PASS" or validation.get("findings_frozen") is not True:
@@ -92,7 +94,7 @@ def load_frozen_statistics(path: str | Path) -> FrozenStatistics:
         if _sha256(file_path) != entry["sha256"]:
             raise DataValidationError(f"Frozen statistical checksum mismatch: {file_name}")
 
-    tables = {file_name: _load_csv(root / file_name) for file_name in STATISTICAL_TABLES}
+    tables = {file_name: _load_csv(root / file_name, codec) for file_name in STATISTICAL_TABLES}
     run_id = str(manifest.get("source", {}).get("run_id", ""))
     if not run_id:
         raise DataValidationError("Statistical manifest has no run ID")
@@ -118,7 +120,9 @@ def load_reconciliation_summary(path: str | Path) -> ReconciliationSummary:
     """Validate and summarize the matching schema-3 reconciliation output."""
 
     root = Path(path).resolve()
-    rows = _load_csv(root / "inventory_reconciliation.csv")
+    manifest = _load_json(root / "analysis_manifest.json")
+    codec = manifest_csv_codec(manifest, kind="reconstruction")
+    rows = _load_csv(root / "inventory_reconciliation.csv", codec)
     if not rows:
         raise DataValidationError("Reconciliation output is empty")
     required = {
@@ -241,10 +245,16 @@ def _load_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _load_csv(path: Path) -> tuple[dict[str, str], ...]:
+def _load_csv(path: Path, codec: str | None) -> tuple[dict[str, str], ...]:
     try:
         with path.open(newline="", encoding="utf-8") as handle:
-            return tuple(dict(row) for row in csv.DictReader(handle))
+            return tuple(
+                {
+                    key: decode_csv_text(value, codec) if isinstance(value, str) else value
+                    for key, value in row.items()
+                }
+                for row in csv.DictReader(handle)
+            )
     except OSError as exc:
         raise DataValidationError(f"Cannot read required CSV {path}: {exc}") from exc
 

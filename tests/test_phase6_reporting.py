@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import csv
 import hashlib
 import json
@@ -167,7 +168,9 @@ def _inputs(tmp_path: Path) -> tuple[Path, Path, Path]:
                     "sha256": "source-checksum",
                 },
                 "analysis_configuration_sha256": "config-checksum",
-                "statistics_version": "test",
+                "artifact_type": "frozen_statistical_analysis",
+                "statistics_version": "1.0.0",
+                "analysis_contract_version": "1.0.0",
                 "validation": {
                     "status": "PASS",
                     "findings_frozen": True,
@@ -196,7 +199,16 @@ def _inputs(tmp_path: Path) -> tuple[Path, Path, Path]:
             }
         ],
     )
-    (reconstruction / "analysis_manifest.json").write_text("{}\n", encoding="utf-8")
+    (reconstruction / "analysis_manifest.json").write_text(
+        json.dumps(
+            {
+                "artifact_type": "analysis_reconstruction",
+                "reconstruction_version": "2.0.0",
+                "source": {"schema_version": "3.0.0"},
+            }
+        ),
+        encoding="utf-8",
+    )
     notebook = create_release_notebook(tmp_path / "source.ipynb")
     return statistics, reconstruction, notebook
 
@@ -212,6 +224,49 @@ def test_frozen_validation_and_summary_are_ground_truth_blind(tmp_path: Path) ->
     (statistics / "descriptive_metrics.csv").write_text("tampered", encoding="utf-8")
     with pytest.raises(DataValidationError, match="checksum mismatch"):
         load_frozen_statistics(statistics)
+
+
+def test_declared_codec_frozen_inputs_preserve_canonical_values_and_summary(tmp_path: Path) -> None:
+    statistics, reconstruction, _ = _inputs(tmp_path)
+    original = load_frozen_statistics(statistics)
+    original_summary = reporting_summary(original, load_reconciliation_summary(reconstruction))
+    for root in (statistics, reconstruction):
+        manifest_path = root / "analysis_manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest.update(csv_codec="codec-v1", artifact_format_version="2.0.0")
+        for path in root.glob("*.csv"):
+            with path.open(newline="", encoding="utf-8") as handle:
+                rows = list(csv.DictReader(handle))
+            encoded = [
+                {
+                    key: "OVTK1_" + base64.urlsafe_b64encode(value.encode()).decode()
+                    for key, value in row.items()
+                }
+                for row in rows
+            ]
+            _write_csv(path, encoded)
+            if "outputs" in manifest:
+                manifest["outputs"][path.name]["sha256"] = _sha256(path)
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    accepted = load_frozen_statistics(statistics)
+    assert accepted.tables == original.tables
+    assert (
+        reporting_summary(accepted, load_reconciliation_summary(reconstruction)) == original_summary
+    )
+
+
+def test_legacy_reserved_prefix_is_never_decoded(tmp_path: Path) -> None:
+    statistics, _, _ = _inputs(tmp_path)
+    path = statistics / "hypothesis_evidence.csv"
+    with path.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    rows[0]["disposition"] = "OVTK1_Zg=="
+    _write_csv(path, rows)
+    manifest_path = statistics / "analysis_manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["outputs"][path.name]["sha256"] = _sha256(path)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    assert load_frozen_statistics(statistics).tables[path.name][0]["disposition"] == "OVTK1_Zg=="
 
 
 def test_reporting_bundle_writes_executed_notebook_pdf_and_refuses_existing_output(
