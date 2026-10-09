@@ -1,0 +1,788 @@
+{
+  "controlling_plan": {
+    "revision": "R2",
+    "sha256": "fd5f22ce4a9bf9d439ba080598baf46a4efb1c2a8ad89035124b33fa24fd69aa",
+    "original_sha256": "b07a3cd74e5133673a21c1c85d6248e89116a1787f11e5846623b6a15f6a80ea"
+  },
+  "baseline": {
+    "commit": "5931b15c1838e83c37217e385e74a6db13afe6bf",
+    "parent": "4ba65a71e82e07b90c03d588cce8e8709853cf46",
+    "tree": "d64f805d62b22b0610d889df063662d43674907a",
+    "zip_sha256": "81cb58eb5dc8c946e0982cdf7f90f847843a62ed4f88a3c866dec4524732a51a",
+    "genuine_history_fetched": true,
+    "earlier_patches_are_ancestors": true,
+    "user_changes_preserved": true
+  },
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\compare_baseline.py"
+      ],
+      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "exit_code": 0,
+      "elapsed_seconds": 3.0164639999857172
+    },
+    {
+      "command": [
+        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--maxfail=1",
+        "--basetemp=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\full-temp",
+        "--junitxml=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\cumulative\\full.xml"
+      ],
+      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "exit_code": 0,
+      "elapsed_seconds": 441.87444390007295
+    },
+    {
+      "command": [
+        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.36160950001794845
+    },
+    {
+      "command": [
+        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2870116999838501
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "core.autocrlf=false",
+        "-C",
+        "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+        "diff",
+        "--check"
+      ],
+      "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+      "exit_code": 0,
+      "elapsed_seconds": 0.14413140004035085
+    }
+  ],
+  "gates": {
+    "G0": "PASS for affected Phase1 contracts; dependent owner blocks remain explicit",
+    "G1_W": "PASS implementer evidence; independent phase approval pending",
+    "G1_P": "DEFERRED; unpassed and disabled for the new publication API",
+    "phase2": "NOT STARTED; awaits delegated review task approval"
+  },
+  "environment": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "sqlite_version": "3.50.4",
+    "sqlite_compile_options": [
+      "ATOMIC_INTRINSICS=0",
+      "COMPILER=msvc-1944",
+      "DEFAULT_AUTOVACUUM",
+      "DEFAULT_CACHE_SIZE=-2000",
+      "DEFAULT_FILE_FORMAT=4",
+      "DEFAULT_JOURNAL_SIZE_LIMIT=-1",
+      "DEFAULT_MMAP_SIZE=0",
+      "DEFAULT_PAGE_SIZE=4096",
+      "DEFAULT_PCACHE_INITSZ=20",
+      "DEFAULT_RECURSIVE_TRIGGERS",
+      "DEFAULT_SECTOR_SIZE=4096",
+      "DEFAULT_SYNCHRONOUS=2",
+      "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+      "DEFAULT_WAL_SYNCHRONOUS=2",
+      "DEFAULT_WORKER_THREADS=0",
+      "DIRECT_OVERFLOW_READ",
+      "ENABLE_FTS3",
+      "ENABLE_FTS4",
+      "ENABLE_FTS5",
+      "ENABLE_MATH_FUNCTIONS",
+      "ENABLE_RTREE",
+      "MALLOC_SOFT_LIMIT=1024",
+      "MAX_ATTACHED=10",
+      "MAX_COLUMN=2000",
+      "MAX_COMPOUND_SELECT=500",
+      "MAX_DEFAULT_PAGE_SIZE=8192",
+      "MAX_EXPR_DEPTH=1000",
+      "MAX_FUNCTION_ARG=1000",
+      "MAX_LENGTH=1000000000",
+      "MAX_LIKE_PATTERN_LENGTH=50000",
+      "MAX_MMAP_SIZE=0x7fff0000",
+      "MAX_PAGE_COUNT=0xfffffffe",
+      "MAX_PAGE_SIZE=65536",
+      "MAX_SQL_LENGTH=1000000000",
+      "MAX_TRIGGER_DEPTH=1000",
+      "MAX_VARIABLE_NUMBER=32766",
+      "MAX_VDBE_OP=250000000",
+      "MAX_WORKER_THREADS=8",
+      "MUTEX_W32",
+      "OMIT_AUTOINIT",
+      "SYSTEM_MALLOC",
+      "TEMP_STORE=1",
+      "THREADSAFE=1"
+    ],
+    "dependencies": {
+      "altgraph": "0.17.5",
+      "asttokens": "3.0.2",
+      "attrs": "26.1.0",
+      "charset-normalizer": "3.4.9",
+      "colorama": "0.4.6",
+      "comm": "0.2.3",
+      "contourpy": "1.3.3",
+      "cycler": "0.12.1",
+      "debugpy": "1.8.21",
+      "executing": "2.2.1",
+      "fastjsonschema": "2.22.1",
+      "fonttools": "4.63.0",
+      "iniconfig": "2.3.0",
+      "ipykernel": "7.3.0",
+      "ipython": "9.16.0",
+      "ipython_pygments_lexers": "1.1.1",
+      "jedi": "0.20.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "jupyter_client": "8.9.1",
+      "jupyter_core": "5.9.1",
+      "kiwisolver": "1.5.0",
+      "matplotlib": "3.11.1",
+      "matplotlib-inline": "0.2.2",
+      "nbclient": "0.11.0",
+      "nbformat": "5.10.4",
+      "nest-asyncio2": "1.7.2",
+      "numpy": "2.5.1",
+      "operational-variance-toolkit": "0.1.0",
+      "packaging": "26.2",
+      "pandas": "3.0.5",
+      "parso": "0.8.7",
+      "patsy": "1.0.2",
+      "pefile": "2024.8.26",
+      "pillow": "12.3.0",
+      "platformdirs": "4.11.0",
+      "pluggy": "1.6.0",
+      "prompt_toolkit": "3.0.53",
+      "psutil": "7.2.2",
+      "pure_eval": "0.2.3",
+      "Pygments": "2.20.0",
+      "pyinstaller": "6.21.0",
+      "pyinstaller-hooks-contrib": "2026.6",
+      "pyparsing": "3.3.2",
+      "pypdf": "6.14.2",
+      "pytest": "9.1.1",
+      "python-dateutil": "2.9.0.post0",
+      "pywin32-ctypes": "0.2.3",
+      "pyzmq": "27.1.0",
+      "referencing": "0.37.0",
+      "reportlab": "5.0.0",
+      "rpds-py": "2026.6.3",
+      "ruff": "0.16.1",
+      "scipy": "1.18.0",
+      "setuptools": "83.0.0",
+      "six": "1.17.0",
+      "stack-data": "0.6.3",
+      "statsmodels": "0.14.6",
+      "tornado": "6.5.7",
+      "traitlets": "5.16.0",
+      "typing_extensions": "4.16.0",
+      "tzdata": "2026.3",
+      "wcwidth": "0.8.2"
+    },
+    "os_caption": "Microsoft Windows 11 Home",
+    "edition": "Core",
+    "display_version": "25H2",
+    "build": "26200.9457",
+    "architecture": "x64",
+    "filesystem": "local fixed NTFS"
+  },
+  "validation": {
+    "baseline": {
+      "pytest_passed": 451,
+      "warning_count": 1
+    },
+    "focused_sharing": {
+      "passed": 2,
+      "denied_delete_probe_error": 32,
+      "permitted_delete_probe_error": 0,
+      "handle_validity_verified": true,
+      "blocking_commit_preserved_private_payload": true,
+      "retry_after_handle_release_passed": true
+    },
+    "component_rerun": {
+      "passed": 242,
+      "warning_count": 1
+    },
+    "full_suite": {
+      "passed": 520,
+      "failed": 0,
+      "skipped": 0,
+      "warning_count": 1,
+      "pytest_seconds": 438.59
+    },
+    "ruff_check": "PASS",
+    "ruff_format_check": "PASS",
+    "git_diff_check": "PASS",
+    "csv_byte_matches": 19,
+    "source_table_matches": 9,
+    "metadata_frozen_tables_reporting_summary": "exact equality",
+    "prior_security_test_functions": {
+      "count": 11,
+      "assertions_and_decorators": "identical UTF8 ASTs"
+    },
+    "no_current_performance_acceptance_claim": true
+  },
+  "failure_accounting": {
+    "initial_component": {
+      "passed": 57,
+      "failed": 1,
+      "cause": "Sharing fixture requested attributes-only access and did not verify the handle; prerequisite was unproven",
+      "stopped_and_reported": true,
+      "corrective_authority_sha256": "0b1add96425a676072ee7937da41749a0d7574c532e1978b4e5fd36464dd8114",
+      "waiver": false
+    },
+    "supplemental_collector": "Default Windows cp1252 decoding caused false AST differences; bytes were unchanged. Collector alone corrected to explicit UTF8; all11 matched."
+  },
+  "compatibility": {
+    "legacy": "Approved current manifest tuples without both new serialization fields retain raw parser semantics. No prefix guessing or date expiry.",
+    "wire_format": {
+      "artifact_format_version": "2.0.0",
+      "csv_codec": "codec-v1",
+      "prefix": "OVTK1_",
+      "encoding": "canonical padded URL-safe Base64, strict UTF8",
+      "producer_versions": "Existing reconstruction/statistics algorithm versions retained; artifact_format_version distinguishes new serialization"
+    },
+    "writers": "Unchanged; Phase3 migration and spreadsheet qualification blocked",
+    "WMS_CSV": "Existing byte format and numeric objects retained; no stacking or apostrophe reversal",
+    "snapshot": "Mandatory validator + supplied role limits; same accepted connection/identity, explicit transaction; no product defaults",
+    "publication": "Private sibling staging, held native object identity, MoveFileExW flags0, no replacement or public-name cleanup; metadata handles do not pin namespaces"
+  },
+  "G0_coverage": {
+    "source_modules": 94,
+    "candidate_call_sites": 1118,
+    "notebook_cells": 20,
+    "traceability_rows": 11,
+    "captured_schemas": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "captured_cli_entries": 19,
+    "call_site_dispositions": "Retained boundary, scheduled migration, or explicit exclusion for every candidate; conservative superset, not a claim current vulnerable routes are safe",
+    "largest_legitimate_workload": "Unknown; product ceilings/performance acceptance blocked"
+  },
+  "blocked": [
+    "Native POSIX qualification/enablement",
+    "Spreadsheet application/build/locale/import-mode matrix and writer migration",
+    "Product-facing resource profiles/performance ceilings",
+    "Versioned five-file release layout",
+    "Stronger concurrent same-privilege release attacker",
+    "Next phase until explicit review approval"
+  ],
+  "limitations": [
+    "Phase1 foundations do not remediate all eight findings; caller/writer/report/release migrations remain in their specified phases",
+    "New publication supports only the stated Windows/NTFS family; tested exact build26200.9457/CPython3.14.6",
+    "Unsupported filesystem rejection branch was tested with ReFS metadata substitution; no ReFS/native Linux filesystem was qualified",
+    "Staging is same-parent by construction; no external staging or cross-volume copy fallback is exposed",
+    "No power-loss durability, automatic pair recovery, authorship/authenticity or namespace-pinning claim",
+    "AST checks cover direct calls and known import aliases; they are ownership regression checks, not general Python security analysis",
+    "One Windows ZMQ event-loop warning also occurred on the unchanged baseline"
+  ],
+  "traceability": [
+    {
+      "finding": "F1",
+      "original_record": "csf_b025d0e5f771878614b0d4cf",
+      "source": "application/release.py:164",
+      "owner": "Confined release capture",
+      "implementation_phases": "6",
+      "gates": "G6/G8",
+      "residual": "Prepared-tree attacker only; stronger mutation and release layout blocked"
+    },
+    {
+      "finding": "F2",
+      "original_record": "csf_8712424929657ce57650ede0",
+      "source": "storage/reconstruction_outputs.py:94;storage/statistical_outputs.py:100;reporting/exhibits.py:267",
+      "owner": "Analytical codec",
+      "implementation_phases": "1,3",
+      "gates": "G1-W/G3/G4/G7/G8",
+      "residual": "Spreadsheet matrix blocked; no writer safety claim in Phase 1"
+    },
+    {
+      "finding": "F3",
+      "original_record": "csf_71385373f3331e07de52b8e0",
+      "source": "wms/storage/repositories.py:63",
+      "owner": "Accepted snapshot and exact one-run acceptance",
+      "implementation_phases": "1,2",
+      "gates": "G1-W/G2/G8",
+      "residual": "Raw readers migrate in Phase 2"
+    },
+    {
+      "finding": "F4",
+      "original_record": "csf_1e1e8d522d755ce592ed2db0",
+      "source": "application/phase6.py:49;reporting/frozen.py:117",
+      "owner": "Bound captured reporting evidence",
+      "implementation_phases": "1,4",
+      "gates": "G4/G8",
+      "residual": "Integrity is not authenticity"
+    },
+    {
+      "finding": "F5",
+      "original_record": "csf_0de558a88b81da440f38db79",
+      "source": "reporting/executive.py:70",
+      "owner": "Pure empirical claims",
+      "implementation_phases": "4",
+      "gates": "G4/G8",
+      "residual": "Custom notebook prose outside guarantee"
+    },
+    {
+      "finding": "F6",
+      "original_record": "csf_6bffa9750483ee4a68af19e4",
+      "source": "storage/database.py:29;storage/reconstruction_outputs.py:34;storage/statistical_outputs.py:39;application/phase6.py:104",
+      "owner": "Publish-new",
+      "implementation_phases": "1,5",
+      "gates": "G1-W/G5/G6/G8",
+      "residual": "Windows/NTFS only; no crash durability or automatic recovery"
+    },
+    {
+      "finding": "F7",
+      "original_record": "csf_6b3da102226d3fddff892617",
+      "source": "analysis/statistics.py:912",
+      "owner": "Exact interval algorithm and supplied resource profiles",
+      "implementation_phases": "2",
+      "gates": "G2/G8",
+      "residual": "Product profiles/performance thresholds blocked"
+    },
+    {
+      "finding": "F8",
+      "original_record": "csf_3099b0ecdc75a9b8cdbc92be",
+      "source": "validation/scenario.py:45",
+      "owner": "Local SQL grammar/object policy and accepted snapshot limits",
+      "implementation_phases": "1,2",
+      "gates": "G1-W/G2/G8",
+      "residual": "Unknown executable/computed objects non-PASS; legitimate extensions may be rejected"
+    },
+    {
+      "finding": "PDF",
+      "original_record": "f70d93e08d893e994a850c0ea658f73bb8410074",
+      "source": "reporting/executive.py:425",
+      "owner": "Existing XML escape sink",
+      "implementation_phases": "1,7",
+      "gates": "G1-W/G7/G8",
+      "residual": "Future Paragraph fields require routing review"
+    },
+    {
+      "finding": "WMS-CSV",
+      "original_record": "e5efb68352f9205f6d01ffd73e4b03b84453c7a2",
+      "source": "wms/application/export.py:106",
+      "owner": "Existing presentation apostrophe guard",
+      "implementation_phases": "1,7",
+      "gates": "G1-W/G7/G8",
+      "residual": "Irreversible apostrophe collision preserved"
+    },
+    {
+      "finding": "Terminal",
+      "original_record": "3d434602635dcd3ff528be2799b856b80b6c395a",
+      "source": "console/output.py:8;cli.py:373",
+      "owner": "Existing terminal_text/write_line",
+      "implementation_phases": "1,7",
+      "gates": "G1-W/G7/G8",
+      "residual": "Trusted structural output retained; new diagnostics must pass sink once"
+    }
+  ],
+  "golden_csv_sha256": [
+    {
+      "path": "baseline-reconstruction/inventory_event_ledger.csv",
+      "sha256": "22d32f5bc9524287ee39d0a1bf9471ed39f8450c9737eac83e60fc17958d6455"
+    },
+    {
+      "path": "baseline-reconstruction/inventory_reconciliation.csv",
+      "sha256": "ab7f93d84b4fcc099e47b5d934760a52df86882c6b97ae73b5837ff014b72ba6"
+    },
+    {
+      "path": "baseline-reconstruction/pick_context.csv",
+      "sha256": "66c6df3340174b2820c2965ef3b183a85a68487d6f8aa8f2ecf445525dbfb76f"
+    },
+    {
+      "path": "baseline-reconstruction/qa_adjustment_context.csv",
+      "sha256": "f5dea174a4d9c48a30dea72a5b4158451c4b8c7574a9f3d3c8f6ce064389e3e3"
+    },
+    {
+      "path": "baseline-reconstruction/replenishment_context.csv",
+      "sha256": "2e749a3bb395c81c9b6f2acbc57c3b98ce4d6e7748f9e85e31f9f2c76644ff96"
+    },
+    {
+      "path": "baseline-reconstruction/selector_exposure.csv",
+      "sha256": "a7488d1d20cfd7f68dd5d8d8b8397b1a0e64db044a0500d2db7b59fce4b3fa81"
+    },
+    {
+      "path": "investigation-reconstruction/inventory_event_ledger.csv",
+      "sha256": "9c793937526677ef10a33de0f0dce065071be1780eb9c4379d278d39b97284ad"
+    },
+    {
+      "path": "investigation-reconstruction/inventory_reconciliation.csv",
+      "sha256": "72141dd65875824f79d00d73cf0dbcf35be3b23815f815b1509072cbdd6f07f6"
+    },
+    {
+      "path": "investigation-reconstruction/pick_context.csv",
+      "sha256": "65e1ab378e3921ccb22f43ba550810b5a6cf6b19c26e5c3fd94e7e65fb1db2d3"
+    },
+    {
+      "path": "investigation-reconstruction/qa_adjustment_context.csv",
+      "sha256": "33884686339935648ea2aa17a0662ca097b2d8c0469d9082c39335a30be25f47"
+    },
+    {
+      "path": "investigation-reconstruction/replenishment_context.csv",
+      "sha256": "8a9fe3f91f680468146a956c55c88ee8bf3408b4b2935ba1e971ed64db2d3d3a"
+    },
+    {
+      "path": "investigation-reconstruction/selector_exposure.csv",
+      "sha256": "7002da9f8924354e7dd0c3f3625a66130c51f81a722991db62cc813068b81b7a"
+    },
+    {
+      "path": "statistics-one/descriptive_metrics.csv",
+      "sha256": "3dad68fa62800c692442d31c4888f7aceffd634b8f801c8f41b7321ccd5b9a7f"
+    },
+    {
+      "path": "statistics-one/hypothesis_evidence.csv",
+      "sha256": "01ff3a739cabbe08f9604433b94ee932bef2bdb87c05cdbb7d546c7577f00273"
+    },
+    {
+      "path": "statistics-one/qa_adjustment_evidence.csv",
+      "sha256": "bb45278892e7f5d15a607e82910c277fc324384842d495ffe7e95697b5e94ce5"
+    },
+    {
+      "path": "statistics-one/replenishment_evidence.csv",
+      "sha256": "a714711f8c6840f6d41e222470266c17fdc34e3ba7d558334ce725ae542f13ed"
+    },
+    {
+      "path": "statistics-one/selector_adjusted.csv",
+      "sha256": "9806cff145cd423c75e0a976617bd18ebe330de392d9f0a3c8e920290c198fa4"
+    },
+    {
+      "path": "statistics-one/selector_crude.csv",
+      "sha256": "c9fafe8ac5764740e47842a5971c34621be905333704c2b192f4c3eed8ed0d42"
+    },
+    {
+      "path": "statistics-one/sensitivity_results.csv",
+      "sha256": "e957cd4599889792ea1002335dfe77eaf7e872b7b6db930ab389237b9f36623d"
+    }
+  ],
+  "evidence": {
+    "task": "01a120b5-ba07-70e3-8295-72dbedb1d4dc",
+    "storage": "Codex Security persistent supplemental artifacts, outside the source checkout",
+    "phase0_receipts": [
+      {
+        "path": "artifacts/phase0/obtain_baseline_history.py",
+        "sha256": "bde443e309e8829acde9fa02ced249b4ce166aab021fd74f97e2007c8139868e"
+      },
+      {
+        "path": "artifacts/phase0/git-provenance.json",
+        "sha256": "e05908b5061a1629b5a3fb447b2e3b32e634256b3ab5ff072cfd301cecfd1a81"
+      },
+      {
+        "path": "artifacts/phase0/capture_contracts.py",
+        "sha256": "0d740703282b5ff1c1cdfb15dae8e310510dda43256ccb3b905209cc163527e3"
+      },
+      {
+        "path": "artifacts/phase0/cli-contracts.json",
+        "sha256": "1dce81f6475ae4eea12d93344848dafbef37138bf4ca2435d39c51ad02dafcca"
+      },
+      {
+        "path": "artifacts/phase0/schema-contracts.json",
+        "sha256": "af925b51532dc110ff6e5ac1df711b4d2aaaf084409f8ef79a495a404f9ad7f4"
+      },
+      {
+        "path": "artifacts/phase0/artifact-contracts.json",
+        "sha256": "abab6f07de8a41e10ab77bc67e93740109b3fa1626aa015ec49ec37e34ca44a7"
+      },
+      {
+        "path": "artifacts/phase0/reader-contracts.json",
+        "sha256": "8f3f369dfba2da3aaae3657ca1ac5bf577181599b203f22a418c1e291dedf0f0"
+      },
+      {
+        "path": "artifacts/phase0/performance-contracts.json",
+        "sha256": "64086f1c7b68782bf0cb5c2384d2b3db29d85707256923454aa136476a7bbcbb"
+      },
+      {
+        "path": "artifacts/phase0/close_dispositions_r2.py",
+        "sha256": "19b22b4c4b78a690198c5c8a9f9f509c2ed6f50681ae7cef463cd1929ef38bc2"
+      },
+      {
+        "path": "artifacts/phase0/callsite-dispositions-r2.json",
+        "sha256": "2b36a61922e1faedbd55f6bf0ed556976b14b99e2204695281fed088c7d8391b"
+      },
+      {
+        "path": "artifacts/phase0/finding-control-traceability-r2.json",
+        "sha256": "5e8c3054f751de03e0bcc9098a24e2c6b3b805338e6c4ff43e996657b2638363"
+      },
+      {
+        "path": "artifacts/phase0/build_route_contract.py",
+        "sha256": "02910c991da3a9308378e831f2b3210a2a2bbd69b25696c5f0c1dbf1a0259537"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/inventory_event_ledger.csv",
+        "sha256": "22d32f5bc9524287ee39d0a1bf9471ed39f8450c9737eac83e60fc17958d6455"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/inventory_reconciliation.csv",
+        "sha256": "ab7f93d84b4fcc099e47b5d934760a52df86882c6b97ae73b5837ff014b72ba6"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/pick_context.csv",
+        "sha256": "66c6df3340174b2820c2965ef3b183a85a68487d6f8aa8f2ecf445525dbfb76f"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/qa_adjustment_context.csv",
+        "sha256": "f5dea174a4d9c48a30dea72a5b4158451c4b8c7574a9f3d3c8f6ce064389e3e3"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/replenishment_context.csv",
+        "sha256": "2e749a3bb395c81c9b6f2acbc57c3b98ce4d6e7748f9e85e31f9f2c76644ff96"
+      },
+      {
+        "path": "artifacts/phase0/golden/baseline-reconstruction/selector_exposure.csv",
+        "sha256": "a7488d1d20cfd7f68dd5d8d8b8397b1a0e64db044a0500d2db7b59fce4b3fa81"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/inventory_event_ledger.csv",
+        "sha256": "9c793937526677ef10a33de0f0dce065071be1780eb9c4379d278d39b97284ad"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/inventory_reconciliation.csv",
+        "sha256": "72141dd65875824f79d00d73cf0dbcf35be3b23815f815b1509072cbdd6f07f6"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/pick_context.csv",
+        "sha256": "65e1ab378e3921ccb22f43ba550810b5a6cf6b19c26e5c3fd94e7e65fb1db2d3"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/qa_adjustment_context.csv",
+        "sha256": "33884686339935648ea2aa17a0662ca097b2d8c0469d9082c39335a30be25f47"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/replenishment_context.csv",
+        "sha256": "8a9fe3f91f680468146a956c55c88ee8bf3408b4b2935ba1e971ed64db2d3d3a"
+      },
+      {
+        "path": "artifacts/phase0/golden/investigation-reconstruction/selector_exposure.csv",
+        "sha256": "7002da9f8924354e7dd0c3f3625a66130c51f81a722991db62cc813068b81b7a"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/descriptive_metrics.csv",
+        "sha256": "3dad68fa62800c692442d31c4888f7aceffd634b8f801c8f41b7321ccd5b9a7f"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/hypothesis_evidence.csv",
+        "sha256": "01ff3a739cabbe08f9604433b94ee932bef2bdb87c05cdbb7d546c7577f00273"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/qa_adjustment_evidence.csv",
+        "sha256": "bb45278892e7f5d15a607e82910c277fc324384842d495ffe7e95697b5e94ce5"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/replenishment_evidence.csv",
+        "sha256": "a714711f8c6840f6d41e222470266c17fdc34e3ba7d558334ce725ae542f13ed"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/selector_adjusted.csv",
+        "sha256": "9806cff145cd423c75e0a976617bd18ebe330de392d9f0a3c8e920290c198fa4"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/selector_crude.csv",
+        "sha256": "c9fafe8ac5764740e47842a5971c34621be905333704c2b192f4c3eed8ed0d42"
+      },
+      {
+        "path": "artifacts/phase0/golden/statistics-one/sensitivity_results.csv",
+        "sha256": "e957cd4599889792ea1002335dfe77eaf7e872b7b6db930ab389237b9f36623d"
+      }
+    ],
+    "phase1_receipts": [
+      {
+        "path": "artifacts/phase1/attempt-2/component-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-0.stdout.log",
+        "sha256": "62c63f040c321f28d79f9e6589f0a09ad26c067bb3c044bb5c46a0d67fee084c"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-1.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-1.stdout.log",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-2.stdout.log",
+        "sha256": "b221fa32ed80fb2ebc9605eb60fdfa0a5eaa83ce614a9f728a4fa4632fbfa89a"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-3.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component-checks.json",
+        "sha256": "2bcfbafac296f93f5776fac548530a51f73c8e18309226a4b3a10c935694173a"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/component.xml",
+        "sha256": "07084bcfe1b1d5746cf3cb51eb84bc6dfe84e8735f6e923d9dd7c1d8776bc803"
+      },
+      {
+        "path": "artifacts/phase1/attempt-2/run_component_checks.py",
+        "sha256": "e373827fcda4a224478fb316a8ebc523c474b2eba153255a3b77db0efac4f22c"
+      },
+      {
+        "path": "artifacts/phase1/sharing-correction/component-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/sharing-correction/component-0.stdout.log",
+        "sha256": "39040aeb1001c5dbefe5be75e1e4436c74eab45fd6e08a9b478b6a7502fc53e3"
+      },
+      {
+        "path": "artifacts/phase1/sharing-correction/component-checks.json",
+        "sha256": "838b2760e860a5ef9c48b46d15597057add1095b1fbfe48739206b5a33477736"
+      },
+      {
+        "path": "artifacts/phase1/sharing-correction/focused.xml",
+        "sha256": "b42f80849bb466d42be3449100874dc2f40de603470c50036496ac6a570e3a0d"
+      },
+      {
+        "path": "artifacts/phase1/sharing-correction/run_focused.py",
+        "sha256": "9fd69d4104fefaf53ba80ac382c680eab723aace3642996e6a19df35277bc57c"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/candidate-environment.json",
+        "sha256": "a199f4b1403e32bf729ffc703bfa4dc029aa92e6c92ac130029388c3d03bce4c"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/check_prior_tests_utf8.py",
+        "sha256": "f02a618dfbc767db7aa3c22257284553482388d639914eef45c5b05c2b455541"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/check_prior_tests.py",
+        "sha256": "c644834f4246138fd30053b06c160a326c55013d648b764192818b2245e12477"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/compare_baseline.py",
+        "sha256": "bf9e60695e9a5a3a9e89560c8686dffcd7041344a1f3e3bfe7a1ac7d0c768db0"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/compatibility-comparison.json",
+        "sha256": "753a5028c4b7f58915a64ce1e3558d09e76b5822f6d9fec90cc4cc4551507c1f"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-0.stdout.log",
+        "sha256": "a28c8e835b905f9d921ce485576b5e91c8efce0fed2ebc11d7a1a46e61762f00"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-1.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-1.stdout.log",
+        "sha256": "f73280e611b08deacd16c800df0167d4b1954af28f9d406f1376408e561b414d"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-2.stdout.log",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-3.stdout.log",
+        "sha256": "b221fa32ed80fb2ebc9605eb60fdfa0a5eaa83ce614a9f728a4fa4632fbfa89a"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-4.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-4.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/component-checks.json",
+        "sha256": "141a7453de1725fdd246c2544ab8abe73d5ce2f7d42c020d74cb96745382af11"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/diagnose_preservation_collector.py",
+        "sha256": "2e14be9f95b8c119c612afd4be6b024244fcbbcecd67b2b6e90057aa403dfd7e"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/full.xml",
+        "sha256": "ed3a1ce8520b6350e445e9ee1fc801d579de0666560c4934a0f5a03cc2be9d18"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/prior-security-test-preservation.json",
+        "sha256": "5660170519f664f5fbe9e9ce87df67ce9aa2bbc243c6b773056f6970a0e551c0"
+      },
+      {
+        "path": "artifacts/phase1/cumulative/run_all_checks.py",
+        "sha256": "2fd6769a16d77850399d731d82c2c684e83c416709bddcc2a32efb68e7b02d3d"
+      }
+    ],
+    "first_failed_attempt": [
+      {
+        "path": "artifacts/phase1/failed-attempt-1/component-checks.json",
+        "sha256": "baa358d46a87390b44bf4c6a122f597f7ecf7168ddd8e24e57ef803e4c0d78ad"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/component-0.stdout.log",
+        "sha256": "264cc8dad7c23252bab2f09b289565f45cf9b9eccd4570a07cdbaae607fff87c"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/component-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/component.xml",
+        "sha256": "4a52be4c27bbec8f43bb136a851b03f76cc379468fd863b03cec4404ec1b12da"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/failed-candidate.patch",
+        "sha256": "74895fdf5e5208b6d7664783524d7fb92afb41a304722975e204a1b2b60c19a7"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/failed-candidate-state.json",
+        "sha256": "8f1f5c809a0954c6c7ebd35d570c603c91a06a255dabb9429865c34fcd03de0c"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/run_component_checks.py",
+        "sha256": "261e68edeb0dc42e982682003de648b1766adadf15894e33085d3aea25df1057"
+      },
+      {
+        "path": "artifacts/phase1/failed-attempt-1/capture_failed_candidate.py",
+        "sha256": "cc67551ab4623c5e9eb7b4e312de5cc54e01d7f1c711fa7e5b3097283153c7eb"
+      }
+    ]
+  }
+}

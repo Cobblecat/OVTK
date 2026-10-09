@@ -1,0 +1,423 @@
+{
+  "contract": "R2 Phase1 explicit raw-operation ownership; not remediation closure of deferred sites",
+  "files": {
+    "src/operational_variance_toolkit/analysis/reconstruction.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/analysis/wms_reconstruction.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/phase1.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_database:e0b4158239ddfdbc29c38ca4cc6a818f7fc3bbf35a50499320d0add5551640f6": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:f721f6548050d81e70c732877f589d0896caef66a6053e457cdf9b7d80177d7b": 2,
+        "publication_or_file_io:candidate.unlink:dfd37a695f06fc865196408a0b6b1b2039ca7142de0320f61959ac5792eaa73e": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/phase2.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:path.unlink:d1be48384f6b878b78c26c20d263b4aac4c6efea3788dd6d0a68da3ce5902484": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:f721f6548050d81e70c732877f589d0896caef66a6053e457cdf9b7d80177d7b": 2,
+        "publication_or_file_io:candidate.unlink:dfd37a695f06fc865196408a0b6b1b2039ca7142de0320f61959ac5792eaa73e": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/phase4.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:datetime.datetime.now(tz=UTC).isoformat().replace:b42ab81ee20183f74779a1d2886329a3744d0ec690945167910539a3d6c39c4c": 1,
+        "publication_or_file_io:path.open:cf2984cb08c691f2c9c1f8bae5b41cfff4de4e7a17dbea14d92d2e0c1b1b6ab3": 1,
+        "publication_or_file_io:shutil.rmtree:2610d0565fe9d1ab14006013a8b5944a4bc167819aa788d9d441716c1981eb2a": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:478a1ca043d984226133ea43720f0f5ccf8aa0741e8044df5d065e3b430e88f5": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/phase5.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:generated_at_utc.astimezone(UTC).isoformat().replace:a167b5a857b2f6f5a3d96d162ad32d587ac7a39fa7215761d51f4e69ee6adb37": 1,
+        "publication_or_file_io:shutil.rmtree:360f7cd437fba99c696f7f7484dfc8cd58a5f9891151f09517e6a49898d8f987": 2
+      }
+    },
+    "src/operational_variance_toolkit/application/phase6.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:final_output.parent.mkdir:c27f4dc9d6fd091ccd0fe8f4be6550ec842e7375e6b4e3ba59bcde29afd613d6": 1,
+        "publication_or_file_io:temporary.mkdir:d69529589abc0cf836f88401ccbee520a12b0cfaba1ba9dbeae8cc19599d27c0": 1,
+        "publication_or_file_io:notebook_dir.mkdir:45ee3b1e1c072b00e6c2991e687b89bf26c8599f24be8888d4bc9df14693316e": 1,
+        "publication_or_file_io:shutil.copy2:80151894a650fd3502fd79fd7c70c6236ac51dd7325c615dfc6bb042f6d5bee8": 1,
+        "publication_or_file_io:manifest_path.write_text:d9384998e850380bc9b3e4fac6cd39b03ff98d9fd385fc4f897196bef692708f": 1,
+        "publication_or_file_io:temporary.rename:131032610fe28375524f82e1fc98492dbf85fa1eef34a68aebf27b6c42ae8652": 1,
+        "publication_or_file_io:path.open:cf2984cb08c691f2c9c1f8bae5b41cfff4de4e7a17dbea14d92d2e0c1b1b6ab3": 1,
+        "publication_or_file_io:(generated_at_utc or datetime.now(tz=UTC)).astimezone(UTC).isoformat().replace:8532ba6153b2d04a7f521c7d4a21b8e6bbcc1d7403fdc39f0eb76fd4aebe72ef": 1,
+        "publication_or_file_io:final_output.rmdir:23c4e3a0f308457470c47b33374eb53dd23146199e734cf2edb6ca4f390a3324": 1,
+        "publication_or_file_io:shutil.rmtree:919d6a58567b2e2b6171ab36d57bcc2b50985ab155564bbc6f522edd7ffc3f6e": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/release.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:output.mkdir:faaac40e2a6650311421c6db133ab954fda46242aadcdf2651ca336d26f28347": 1,
+        "publication_or_file_io:source_checksum.write_text:a56de51ded693b9e27820f42ce84b397187de8694a76037e13524f7966d95491": 1,
+        "publication_or_file_io:truth_checksum.write_text:0aa98b62113caaa38ada7b2e0148f37e8b0f1231b6101ed3c381a653837307ad": 1,
+        "publication_or_file_io:combined_checksum.write_text:34d90c34c20d35b393cf87e94844040120dceb12e9594f14a2facec03c5b9a77": 1,
+        "publication_or_file_io:destination.mkdir:82aad6df257411f4104bd7355d33963b9363f01561dfa1ac399db2e70091a5bc": 1,
+        "publication_or_file_io:data.mkdir:ae2cecf2c06713990da5f20e1e706d6c7b67341b595822ac0e73d87d8b744acd": 1,
+        "publication_or_file_io:(artifacts / 'README.md').write_text:e8839078952ab476d8e2e35f37cbae4b96ce5c72fb13b655dc038e96c591a1db": 1,
+        "publication_or_file_io:path.write_text:80a3f9710f1313f34602a0956549d019af082f6ebf732f796944c6b0dc50abdd": 1,
+        "publication_or_file_io:manifest_path.write_text:d9384998e850380bc9b3e4fac6cd39b03ff98d9fd385fc4f897196bef692708f": 1,
+        "publication_or_file_io:(root / 'SHA256SUMS.txt').write_text:452123d6b07b201002c6686513375565a7f91c15bd54e267f1b8ef6ce1f7e74c": 1,
+        "publication_or_file_io:root.mkdir:1ae42cd16a276ebbc37ad02dc154830a34c9f13b615b2aa31048f6002d6010f8": 1,
+        "publication_or_file_io:(root / 'SPOILER_WARNING.md').write_text:bc5f76261d8b07fd1c4b0f9152d38a53e36bedb98edc6070c02db7814cb68fac": 1,
+        "publication_or_file_io:(root / 'GROUND_TRUTH_MANIFEST.json').write_text:b28ceb4bfab36e609cecfdd4848bf297e39b8efe790f423bfa3079fe7ebfb731": 1,
+        "publication_or_file_io:(root / 'SHA256SUMS.txt').write_text:89094eb600a69b25679785366c3b1dad2157df73c65404c58e712d00f0ff77df": 1,
+        "publication_or_file_io:destination.parent.mkdir:0d5e611b4a4a0eea64cf85dbd5d00d2bf01f013a4bc1a2213948b78668fa2938": 1,
+        "publication_or_file_io:shutil.copyfile:e661067b18106f2fdac6e04176e3f3780a96235bae9fc42d99db7b88d6a9469c": 1,
+        "publication_or_file_io:zipfile.ZipFile:6d90a041d09b786c520fdd0cb9a546e563379e61a9f7b2bd5363383831bd108b": 1,
+        "publication_or_file_io:zipfile.ZipFile:10483aa1a6593833730de529e5605e69b222f5fcc62fec5e279a9039a04d5905": 1,
+        "publication_or_file_io:path.open:cf2984cb08c691f2c9c1f8bae5b41cfff4de4e7a17dbea14d92d2e0c1b1b6ab3": 1,
+        "database:sqlite3.connect:b6fca8bf85d19e4bc67f8d76dbab8d0d0a96c3b88c536d398e82d8672b4fd5dd": 1,
+        "publication_or_file_io:name.replace:c214ab3e17ab0948f60a4089914214c576ac92022a0a9278320e277c9b3cafd4": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/wms_generation.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_database:e0b4158239ddfdbc29c38ca4cc6a818f7fc3bbf35a50499320d0add5551640f6": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:f721f6548050d81e70c732877f589d0896caef66a6053e457cdf9b7d80177d7b": 1
+      }
+    },
+    "src/operational_variance_toolkit/application/wms_investigation.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:path.unlink:fdafd60c5264fbca4fa9066d77d601f95e76d97d7929480b85dd70e6cbb98a9b": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:f721f6548050d81e70c732877f589d0896caef66a6053e457cdf9b7d80177d7b": 1
+      }
+    },
+    "src/operational_variance_toolkit/cli.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "terminal:print:a98a86e4029deeedfde60822a18f24b36b36bed87e5a616430985bcdb5c7337e": 1,
+        "publication_or_file_io:value.isoformat().replace:cc88ade8219aea433703aca43df8d28b10abb91b2d8d2aff4b8ec3e643ef6805": 1,
+        "terminal:print:1c439fe4c039c2bbfc5b84d651c30458085262ca88fa00d999eb3dcb8f0e8727": 1
+      }
+    },
+    "src/operational_variance_toolkit/config.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:parsed.replace:359006042de1732b35a93b556a318957bf3a5c1d3dd2ae6575acd9adfbe05af3": 1,
+        "publication_or_file_io:utc_value.astimezone(timezone).replace:030f89c10aca9fa82b226a1fdeb75ced549aa73419ded86b99de68bb5733c491": 1,
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1,
+        "publication_or_file_io:config_path.open:92ebf149e6d7d9242dec47c5f4de6f7ffac097f23b28bc9e63ab19778049000f": 1
+      }
+    },
+    "src/operational_variance_toolkit/console/commands.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:command.verb.replace:dab03aeb7ff172e6b528b99cafba011eb103e6e377fa37c9dbcf2eb6cf9c5ece": 1,
+        "publication_or_file_io:name.removeprefix('--').replace:efd7c010ba3c2f5e0b88f496997d8686bd0f0bac07b5e5f78d4392b566007696": 1,
+        "publication_or_file_io:token[2:].replace:c5eba9fa33ad46a568a89a8cc5ca3b45cc6c439054e8a991c2c501eb404d9832": 1,
+        "publication_or_file_io:name.replace:9ff4629186938698760a4b6859df1426cc01ac05b6489a4a95d6d2d17e542f5d": 1
+      }
+    },
+    "src/operational_variance_toolkit/console/input.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:self._path.parent.mkdir:2c92521efe977f2fdec9d0757aa351ed210293d50725db5a8aacb2e013b10b3c": 1,
+        "publication_or_file_io:temporary_path.write_text:3c399020fe818bc305d8d8138cca19addcc4a193066092e527299b9cfbeb739e": 1,
+        "publication_or_file_io:temporary_path.replace:e1e0f98d4e321d0c7d47fef03ec210b26270a5072c89d88dfe697f3bd2315f6f": 1,
+        "terminal:self._stdout.write:8bbfec2c6a8ed378b8cf4cb968e5647944a6a2e791a1c26452f9c0fa86392dc2": 1
+      }
+    },
+    "src/operational_variance_toolkit/console/output.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "terminal:print:9a9205243feca5c3a5f82eaafad50cb17fa90b94be69dfc74edcfae1a093f91f": 1
+      }
+    },
+    "src/operational_variance_toolkit/console/rendering.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:parsed.isoformat().replace:deb7fba10d4abcf3ac947dec491580ccc21eff4910b36b344f691baef97cb79e": 1,
+        "terminal:print:6c6d93574dfe310b41b3763e97fcb19457510c77483209877bf77dad1e5a01e0": 1,
+        "terminal:print:cea797fb19dc19acae7421d36dbbfc35f406366e0cae3ea5e736720953f90b65": 1,
+        "publication_or_file_io:text.replace:b09bc53387bb7716e5debca88352e36209d7dd2531c314aa4001e9375a599c26": 1,
+        "publication_or_file_io:column.replace:707c416c90f724fba2f0b41ad61d18cce8d591f89ac79e170f5681ce04544609": 1
+      }
+    },
+    "src/operational_variance_toolkit/console/session.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:755b07359a693bd64f5bee0756d49391c0aa0dca09d0f4dfa7c99b9dcce8eccd": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:cc57fe9f1fbb3d513234fb738deef8103b5d9d16fe5921b60404d4e4afafe14c": 1
+      }
+    },
+    "src/operational_variance_toolkit/domain/operations.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.isoformat().replace:cc88ade8219aea433703aca43df8d28b10abb91b2d8d2aff4b8ec3e643ef6805": 1
+      }
+    },
+    "src/operational_variance_toolkit/domain/run.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:local_value.replace:162226c59a82ba395642f9454f104b58e02bbebe8503f2c5625d48abce4c2a9f": 1
+      }
+    },
+    "src/operational_variance_toolkit/domain/time.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.replace:fba5891d40b676412fa4035503cb627a5438dd949b201967115482d0ee7cd9c0": 1,
+        "publication_or_file_io:aware_local.astimezone(UTC).astimezone(timezone).replace:f97d1a91ffb1eccb017bb0a17467e1722bd047ca9e8a2e51abbab5d06f399e23": 1,
+        "publication_or_file_io:value.astimezone(UTC).replace(microsecond=0).isoformat().replace:d40fbf7b8dbd4453b4ebbf9055faad62b4f632b5f0a46b91096745dab1cec0e2": 1,
+        "publication_or_file_io:value.astimezone(UTC).replace:54f85511dbc9f4a0a8fef407082d26652831fa9c6f0952f09623c92a8eaeecfc": 1
+      }
+    },
+    "src/operational_variance_toolkit/generation/operations.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.isoformat().replace:cc88ade8219aea433703aca43df8d28b10abb91b2d8d2aff4b8ec3e643ef6805": 1
+      }
+    },
+    "src/operational_variance_toolkit/reporting/executive.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:output.mkdir:faaac40e2a6650311421c6db133ab954fda46242aadcdf2651ca336d26f28347": 1,
+        "publication_or_file_io:markdown_path.write_text:431a3d8c9c90f43312f2b4867c64b7bbaa7de858215f7762d8df5b85492223f3": 1,
+        "publication_or_file_io:appendix_path.write_text:023bbdc615534b695d3b308c69f2b2db977a86906cc172e15bc01a1ea2923e32": 1,
+        "publication_or_file_io:source_notes_path.write_text:69d7d95ed9310e2a988e5adfa27bc7656c5bd64c953553aa4be81d5a2bda84d3": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:0cad6679da8c87f296e3b34f7c8918321c6a27b6278c81b58f2f5d66a8fde48a": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:5d79abb6c20b2cca94d56ee500384c332c45db94b33090902a47cf91d9f24908": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:a0a71ee94f3de3e0abd7f88caf76e18a1278a128e2c813b64ab9cbf1dfbaad10": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:5e1ebe73c6cb7b7b216d83d0c856c687c716639db4706bc6c36722ff137c255b": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:4859c1cdae0f273afe113cfed9daa3f23eec47d0a2d5e8ffa668e3f8dc4e0ebf": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:5b94e2712607611ed593d99129fb41ae3598d57af7617d544c8a2df3d1d6fcc0": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:b1695b0e9858f50b123bf1f3103ac6382a26e25492b38c1da45dd37315ed70a9": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:08fa7de994cadf33b5ce630aa2d7f85451e376ad323f33a0003d8ec507be15fd": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:706370bf1adcd65ad02ffa3066692da38b1735eb67de0d450855b4ac6f1a35ad": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:da5fe6a7ecf48ea8aa173a96f6348cedbfc35c2094979b1ce2cffdc15317bcbe": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:6f36b0562d43605113a408d2e1abd1c607283cd3f91376d8a2ef292af6da6209": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:08844d6c1b43826570a99487d5c9b3562ddbd5ff7e70ab0ca94592f02c20175a": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:02f6268a30f35f414d64c42cbbe197f23fb2d5071c8107512fc4c4dcb7927324": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:d5bb51297b78abe51a77558bfd70d89d2c710a1541330cf25ed768d1d5b5f4c9": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:7270e4949484ff0673959becfe5f257609455981df18bf4b7132a37d57232ce8": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:865443ffcfe3ad3f7b329f3836798e240a1ecfa8c55038152823975ae66729f3": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:b8d1965030b3938ae80647bd7621ce22a8395cb7c304e1660c11b71226099022": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:d64407a06d0932cf7d31fb42bbad0b9724c10683f8ec502654ddcc23197d9602": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:43866324cef7755f9abd9726e3907ec4c02aeb50061ad9dbe11c1856673c341e": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:48e8ad1403c76e023ba968d21eb583373ff195a0df4fdfa94b9dfc18e9e158b2": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:febcc78ce1100138301eceb24560f12bb4af52e798abecbba8f3b50adb560781": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:8158c8e65e591855224ab3e4b97a07b9b5f4498ed9efde4755eb65f84a71d91d": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:2a83d2380f16cadc65423436945bbadb9623b523fca29eb87dd8f798e36875b5": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:6c9774a192a15c8ed4e64dbe4aad104b0953c1a9f6bee88bb316434eb2991397": 1,
+        "pdf_parser:reportlab.platypus.Paragraph:20c41d8ce1f1995e86799febf8be9bb45c00134e1fb53020bedff623e728dea0": 1
+      }
+    },
+    "src/operational_variance_toolkit/reporting/exhibits.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:output.mkdir:faaac40e2a6650311421c6db133ab954fda46242aadcdf2651ca336d26f28347": 1,
+        "publication_or_file_io:(output / 'exhibit_catalog.json').write_text:c74bfd3cdcb7489e8471971f1d3910b4436c54b05d39aa48fb65e6a3a45442a4": 1,
+        "publication_or_file_io:figure.savefig:c55d0f9f4d2a80c566b20652a914ee15db9b256e68f0a90feb8ca68b5906e8cb": 1,
+        "publication_or_file_io:path.open:4d8f5585ce56aeb3d26af23d448c1d507ecbff274f1b0a0284f5161487ee4e85": 2,
+        "analytical_csv:csv.DictWriter:bf13e49386ff611cf648c5b733d2743714ff45085ee24f33bef713419b8cccd9": 2
+      }
+    },
+    "src/operational_variance_toolkit/reporting/frozen.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:path.open:cf2984cb08c691f2c9c1f8bae5b41cfff4de4e7a17dbea14d92d2e0c1b1b6ab3": 1,
+        "publication_or_file_io:path.open:a958bbc8edaa9570fb8e2a949ee1086f39ee18d3d1f2ba3fbb90c455487b658f": 1,
+        "analytical_csv:csv.DictReader:7acaef584628566aa4f50af84319c5cc2fd6090f63fe2c61409b54284970bb9a": 1
+      }
+    },
+    "src/operational_variance_toolkit/reporting/notebook.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:destination.parent.mkdir:0d5e611b4a4a0eea64cf85dbd5d00d2bf01f013a4bc1a2213948b78668fa2938": 2
+      }
+    },
+    "src/operational_variance_toolkit/sandbox/application.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:path.parent.mkdir:f32fa3bf8bd728879b5ee78564c0e339658253e810165c3df033c0892f416875": 1,
+        "publication_or_file_io:manifest_path.unlink:8585d1d507fe9d1f5d476057f0feb26151e2a6c50c7f3076db62a9cb7c18b7fd": 1,
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1,
+        "publication_or_file_io:dataclasses.replace:7e691ff83a59f326fe234df612130185a8c483ba44675f5ca1250aa21dfc26b1": 1,
+        "publication_or_file_io:temporary.unlink:10266c348b4074f537ab6c5fed62f1338e3361500711cf786da9678fc0144552": 1,
+        "publication_or_file_io:destination.parent.mkdir:0d5e611b4a4a0eea64cf85dbd5d00d2bf01f013a4bc1a2213948b78668fa2938": 1,
+        "publication_or_file_io:os.link:872223ac8be524b41ede1e84f78c6fa8afdfe759aaf871e43dfc5b43ba670d2b": 1,
+        "publication_or_file_io:temporary.unlink:89264f836cef458860d8017bffabf55f2252d55d21b89f7cb12f9873ebc73ea7": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:a7821bc7f3bcb52fe0c5b0714d7a1181026662397df479629fb696fcacd70b72": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:ada48f8d294a671bfcde9a3f81696124de0ebb130dde59446e6463e91c5813d6": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:755b07359a693bd64f5bee0756d49391c0aa0dca09d0f4dfa7c99b9dcce8eccd": 1,
+        "database:sqlite3.connect:9cd025fb3e22a6dfa74b60ba5fa91eab0d0871f89b7ceffe52a84eb98f714a34": 1
+      }
+    },
+    "src/operational_variance_toolkit/scenarios/investigation.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1
+      }
+    },
+    "src/operational_variance_toolkit/simulation/baseline.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/_windows_publication.py": {
+      "owner": "Phase1 shared boundary; no alternative accepted-snapshot or publication mode",
+      "routes": {
+        "publication_or_file_io:_kernel().MoveFileExW:4af665451ae42d82fdd3cec3149c456f7bd4a6fb921bd601954cfbb95dedbdaf": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/database.py": {
+      "owner": "Phase1 shared boundary; no alternative accepted-snapshot or publication mode",
+      "routes": {
+        "database:sqlite3.connect:12ae938fcd2357a784134579f920d887058645bfff4677cbe7c655c6eba574d0": 1,
+        "database:sqlite3.connect:26983bcbae8acaa8496631c34d21c93d599f747e16221ae1f601df7cf9974fdc": 1,
+        "publication_or_file_io:database_path.parent.mkdir:4ab18808428de7c6de1b1147e02d1dc70cc5198b01c55db9944a893a18677ef5": 1,
+        "database:connect_database:e0b4158239ddfdbc29c38ca4cc6a818f7fc3bbf35a50499320d0add5551640f6": 1,
+        "database:connect_readonly_database:755b07359a693bd64f5bee0756d49391c0aa0dca09d0f4dfa7c99b9dcce8eccd": 1,
+        "database:connect_readonly_database:d4bd24a80013297f26c5b18acc679c4ad4a0a94e63d716bce72b862622cb106d": 1,
+        "publication_or_file_io:candidate.unlink:dfd37a695f06fc865196408a0b6b1b2039ca7142de0320f61959ac5792eaa73e": 1,
+        "publication_or_file_io:database_path.unlink:2427f8e6091cfa33b76eb9e2bb1e8fb633547857048bc202aa9aefff7889b265": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/ground_truth.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:artifact_path.parent.mkdir:7836daf899778a759f0b41a336542901a82a79be5dd5d8f9a22cb2c01f28ca8b": 1,
+        "publication_or_file_io:artifact_path.write_text:a278aad1a2fe2d531135394f96d94777d28a0bef0cb53ce8f65207f88776cf5c": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/publication.py": {
+      "owner": "Phase1 shared boundary; no alternative accepted-snapshot or publication mode",
+      "routes": {
+        "publication_or_file_io:stage.mkdir:fbd22c09c3203fa4a2361a09f083ce31a7df4de17c4f91bb89f27693d08feaff": 1,
+        "publication_or_file_io:shutil.rmtree:7d40a04ca8756c1c1c7e6760994a1237f329fcf964195ab88e14134cee4c7647": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/reconstruction_outputs.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:parent.mkdir:50eec5a1f6f3557d28d160742f4db42e1e26a98ceee5066039125abb15e7b8be": 1,
+        "publication_or_file_io:temporary_path.mkdir:0a4e745fd55be3564ec4a34f3bbd7a116d77118c8e56ffb61f58a2b6755aa7c7": 1,
+        "publication_or_file_io:manifest_path.write_text:ba388b70005fcdb7bd850577ffcb212da63b622a17746fc8bfc69a7f5388db15": 1,
+        "publication_or_file_io:temporary_path.rename:19c1994b03d53cd21ab5cb720284ed4349ba7d0dc3a853d331294e951b1b2e4a": 1,
+        "publication_or_file_io:path.open:4d8f5585ce56aeb3d26af23d448c1d507ecbff274f1b0a0284f5161487ee4e85": 1,
+        "analytical_csv:csv.DictWriter:bf13e49386ff611cf648c5b733d2743714ff45085ee24f33bef713419b8cccd9": 1,
+        "publication_or_file_io:path.open:cf2984cb08c691f2c9c1f8bae5b41cfff4de4e7a17dbea14d92d2e0c1b1b6ab3": 1,
+        "publication_or_file_io:final_path.rmdir:a8cdc9c74bb142d3bf34fcb06d5bfcede7940dffd0541e789ea0149ac2c51304": 1,
+        "publication_or_file_io:shutil.rmtree:08b4e3265f24cfa28a8ea0ef7c32eeb82fd5cce4fb783a1ed8d2f14dac5cf019": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/statistical_outputs.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:final_path.parent.mkdir:acbb130df112f14fb982ef8ed1a7eb3928a00011c17647b74c379404cf85fca3": 1,
+        "publication_or_file_io:temporary_path.mkdir:0a4e745fd55be3564ec4a34f3bbd7a116d77118c8e56ffb61f58a2b6755aa7c7": 1,
+        "publication_or_file_io:config_path.write_text:8d2d4a6884aac0bf98945021977871e8594c35ffc3b0002cd7dcd7aef2d31280": 1,
+        "publication_or_file_io:diagnostics_path.write_text:c15db11a1fc660ec639f0f4b26bff9dbf7fd71c6f703e57e2418ca5698af3d93": 1,
+        "publication_or_file_io:manifest_path.write_text:ba388b70005fcdb7bd850577ffcb212da63b622a17746fc8bfc69a7f5388db15": 1,
+        "publication_or_file_io:temporary_path.rename:19c1994b03d53cd21ab5cb720284ed4349ba7d0dc3a853d331294e951b1b2e4a": 1,
+        "publication_or_file_io:path.open:4d8f5585ce56aeb3d26af23d448c1d507ecbff274f1b0a0284f5161487ee4e85": 1,
+        "analytical_csv:csv.DictWriter:bf13e49386ff611cf648c5b733d2743714ff45085ee24f33bef713419b8cccd9": 1,
+        "publication_or_file_io:final_path.rmdir:a8cdc9c74bb142d3bf34fcb06d5bfcede7940dffd0541e789ea0149ac2c51304": 1,
+        "publication_or_file_io:shutil.rmtree:08b4e3265f24cfa28a8ea0ef7c32eeb82fd5cce4fb783a1ed8d2f14dac5cf019": 1
+      }
+    },
+    "src/operational_variance_toolkit/storage/statistical_sources.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "analytical_csv:pandas.read_csv:8c13e583590ca5a85c049776be4297e1947f1002eca22e1531c14732edf348b1": 1,
+        "publication_or_file_io:Path(path).open:a1fa6cab79bd92a0e8585c90c1804d6850fdbfabbb8cbaedbfbcf16de7892a34": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:f7cbdddd73bbfa1333fedf6b1a7ff0c34a565d9e0c1a3c8611a44447a9b5ce63": 1
+      }
+    },
+    "src/operational_variance_toolkit/validation/scenario.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_database:e0b4158239ddfdbc29c38ca4cc6a818f7fc3bbf35a50499320d0add5551640f6": 1,
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/version.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:pyproject_path.open:2bca3880ef5ccd8aa38fcbd1e61b485c0768c36517550a3eb8c28eebf908f481": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/describe.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:755b07359a693bd64f5bee0756d49391c0aa0dca09d0f4dfa7c99b9dcce8eccd": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/export.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:path.parent.mkdir:f32fa3bf8bd728879b5ee78564c0e339658253e810165c3df033c0892f416875": 1,
+        "publication_or_file_io:temporary_path.unlink:d499794c219a520b15b9b8839084c424591215c81e1af59383cf6f251c9ea22e": 1,
+        "analytical_csv:csv.writer:0897601cad167853a43a213497c2e45f4bb91ce59f029e0b0beacceb65482b30": 1,
+        "publication_or_file_io:os.link:68da1ad5cc37f0522c4cc729d255b7f6bc1f2efec95cbaf40327b9479ee71c3e": 1,
+        "publication_or_file_io:temporary_path.unlink:769f25580ca1440f76923aa3aef1089ede60f5e005b91c0e95bf0d2c0c8e582d": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/initialize.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "database:operational_variance_toolkit.storage.database.connect_database:e0b4158239ddfdbc29c38ca4cc6a818f7fc3bbf35a50499320d0add5551640f6": 1,
+        "database:operational_variance_toolkit.storage.database.connect_database:f721f6548050d81e70c732877f589d0896caef66a6053e457cdf9b7d80177d7b": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/inquiry.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:parsed.astimezone(UTC).isoformat().replace:41ed5138aae4b4a32dc581d09123a4c3d9ca074aa3ac73286aa9029124e37ebe": 1,
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/reports.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1,
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1,
+        "database:operational_variance_toolkit.storage.database.connect_readonly_database:755b07359a693bd64f5bee0756d49391c0aa0dca09d0f4dfa7c99b9dcce8eccd": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/application/service.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1,
+        "publication_or_file_io:dataclasses.replace:8898dfbb3a045b923830dccf51e7195668e62781cef870a6cfbab56a7376782b": 1,
+        "publication_or_file_io:value.replace:6f2d3f8cbc4977837e282a009f4a11c31e37cf8cd92b2679045fa96fde8887c7": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/storage/commands.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:value.astimezone(UTC).isoformat().replace:6dc61b86dcc22ca949c9395479a36510ec8962a3173360524f8bb3b42c8a90e6": 1
+      }
+    },
+    "src/operational_variance_toolkit/wms/storage/inquiry.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:record_type.replace:4b62f309ef4dcd5d00b2dd4dec5700b66ece0f802c79938a1479c95d571f27d4": 2
+      }
+    },
+    "src/operational_variance_toolkit/wms/storage/reports.py": {
+      "owner": "Retained baseline route with G0 disposition; later Phase2/3/4/5/6/7 migration as recorded in callsite-dispositions-r2.json",
+      "routes": {
+        "publication_or_file_io:report_code.replace:819426634e04f4c8d80c036d8fe80854d0a1a2fc316042237d01ce9e0d3576dc": 1
+      }
+    }
+  }
+}
