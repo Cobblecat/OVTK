@@ -2,9 +2,9 @@
 
 Last recorded review: 2026-10-09, commit `5596678448e54a20b1f3ec7fa2d9f3caaed9ec0c`.
 
-This document tracks the security remediation separately from OVTK's feature-development and release milestones. It summarizes status and acceptance requirements without reproduction payloads or private evidence. The private assessment and approved plan remain the detailed specification; this summary does not replace them or authorize implementation, release, or disclosure. 
+This document tracks the security remediation separately from OVTK's feature-development and release milestones. It summarizes status and acceptance requirements without reproduction payloads or private evidence. The private assessment and approved plan remain the detailed specification; this summary does not replace them or authorize implementation, release, or disclosure.
 
-If all goes well I should be done with this branch and have it implemented by the end of the weekend. 
+If all goes well I should be done with this branch and have it implemented by the end of the weekend.
 
 ## Current decision
 
