@@ -6,10 +6,12 @@ Baseline: `5931b15c1838e83c37217e385e74a6db13afe6bf`, tree
 `d64f805d62b22b0610d889df063662d43674907a`. Genuine history was fetched from
 Cobblecat/OVTK and all three earlier security patches were verified ancestors.
 
-G0 is recorded passed for the affected Phase 1 contracts. G1-W implementation
-checks pass on the configuration below. Independent phase acceptance remains
-with review task `01a11f27-1b05-7ea2-b78a-33ceaaf90d49`.
-Phase 2 has not started. G1-P remains deferred and unpassed.
+G0 is recorded passed for the affected Phase 1 contracts. The reviewer denied
+advancement at `1876a476931871ec95b59615cea8ad4f7888d015` because the
+publication qualifier did not enforce R2's CPython/native x64 restriction.
+The bounded correction below passes implementation checks; independent Phase 1
+acceptance remains with review task `01a11f27-1b05-7ea2-b78a-33ceaaf90d49`.
+Phase 2 remains denied and has not started. G1-P remains deferred and unpassed.
 
 ## Changes and boundaries
 
@@ -50,7 +52,7 @@ Phase 2 has not started. G1-P remains deferred and unpassed.
   analytical writers in Phase 3, reporting capture/claims in Phase 4,
   public producers in Phase 5, and release capture in Phase 6.
 
-## Tested environment and results
+## Original candidate environment and results
 
 Windows 11 Home/Core 25H2 x64 build 26200.9457; local fixed NTFS;
 CPython 3.14.6; SQLite 3.50.4; locked uv environment, installed offline.
@@ -64,7 +66,7 @@ are retained in the hashed receipts.
 | Unchanged baseline pytest | 451 passed, one Windows ZMQ warning |
 | Corrected native sharing controls | 2 passed; verified handles and error 32 precondition |
 | Interrupted component suite rerun | 242 passed, one warning |
-| Final cumulative pytest | 520 passed, zero failed/skipped, one warning; 438.59 seconds |
+| Pre-review cumulative pytest | 520 passed, zero failed/skipped, one warning; 438.59 seconds |
 | Ruff check and Ruff format --check | Passed |
 | Git diff --check | Passed |
 | Baseline numerical CSV comparison | 19/19 byte-identical |
@@ -91,7 +93,64 @@ Security supplemental storage for task
 Generated databases, CSV goldens, reports, virtual environments and scratch
 files remain outside commits.
 
-## Failure accounting
+## Native x64/CPython qualification correction
+
+The independent review required a bounded correction within the existing
+F6/G1-W contract; it did not approve Phase 2 or identify a ninth finding.
+Formal review SHA-256:
+`7ffdf9cd17a5a4e1832cfc4ca03d908928a5a6b00203d5bdf86c8c6923eab267`.
+The four reviewed commits are retained and the correction is appended.
+
+Before staging or public mutation, the qualifier now requires
+`sys.implementation.name == "cpython"` and Python 3.14, then calls
+`IsWow64Process2(GetCurrentProcess())`. Only a successful process-machine
+`UNKNOWN` (0), meaning a non-WOW64 process, plus native-machine `AMD64`
+(0x8664) is accepted. Other or indeterminate combinations reject. A failed,
+unavailable or nominally successful probe with unset outputs also rejects.
+Pointer width and architecture strings are not used as admission evidence.
+See [Microsoft IsWow64Process2](https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-iswow64process2)
+and [Python sys.implementation](https://docs.python.org/3.14/library/sys.html#sys.implementation).
+
+The same recorded Windows/NTFS host returned process 0/native 34404 with
+CPython 3.14.6. SQLite, compile options, the lock file and all 63 dependency
+versions are unchanged. Twenty added cases cover actual native publication,
+substituted acceptance, x86, ARM64/ARM64EC, x64 emulation on ARM64,
+unknown/inconsistent codes, failed/unset/unavailable probes and non-CPython
+rejection before the native probe. Rejection cases verify no staged/public
+files remain and focused errors pass unchanged through `terminal_text`.
+Substitutions establish decision coverage, not native qualification of those
+other machines or interpreters.
+
+| Correction check | Result |
+| --- | --- |
+| Publication/routing/snapshot/codec/workflow/prior-patch components | 266 passed; zero failures/errors/skips |
+| Cumulative suite | 540 passed; zero failures/errors/skips; JUnit time 432.367 seconds |
+| Ruff lint, format and Git whitespace checks | Passed |
+| Regenerated baseline CSV comparison | 19/19 byte-identical |
+| Reader tables and metadata/frozen statistics/report summary | 9 tables plus controls exactly equal |
+| Original security-test contracts | 11/11 identical UTF-8 ASTs |
+| Gate input stability | All 196 tracked files unchanged during and between both runs |
+
+Both pytest runs retain the existing Windows ZMQ warning. Timings are
+descriptive; no product performance threshold is accepted. Exact commands,
+native probe/sharing-control JUnit properties, environment and before/after
+file manifests are retained under `artifacts/phase1/qualifier-correction/`.
+The `qualifier_correction` section of [phase1-gates.json](phase1-gates.json)
+indexes their hashes. Later edits affect these gate documents only; executed
+source/test hashes are checked again before committing.
+
+A supplementary commit-preparation collector initially stripped the leading
+space from Git porcelain status and falsely truncated the first expected path.
+It stopped before staging. Only its newline handling was corrected, preserving
+the failed helper/receipt and rerunning the exact four-path/index/source checks.
+No product test or security assertion was waived and no executed source changed.
+
+No no-replace, staging ownership, pair readiness, reader or prior-patch policy
+was changed. All dependent owner decisions and G1-P remain pending or deferred
+as recorded below. The reviewer's owner packet is advisory, not an amendment
+or approval of resource ceilings, spreadsheet targets or release behavior.
+
+## Earlier failure accounting
 
 The first component run stopped after 57 passes and 1 failure. The sharing
 fixture used an unchecked FILE_READ_ATTRIBUTES handle, which did not establish

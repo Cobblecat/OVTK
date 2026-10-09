@@ -10,6 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import pytest
 
+from operational_variance_toolkit.console.output import terminal_text
 from operational_variance_toolkit.errors import (
     OutputExistsError,
     PublicationError,
@@ -34,6 +35,114 @@ def test_unqualified_platform_rejects_before_any_mutation(tmp_path, monkeypatch)
 
 @pytest.mark.skipif(sys.platform != "win32", reason="Native Windows qualification only")
 class TestWindowsPublication:
+    def test_native_x64_cpython_probe_and_publication(self, tmp_path, record_testsuite_property):
+        machines = native._machine_types()
+        record_testsuite_property(
+            "native-process-qualification",
+            json.dumps({"implementation": sys.implementation.name, "machines": machines}),
+        )
+        assert sys.implementation.name == "cpython"
+        assert machines == (0, 0x8664)
+        final = tmp_path / "result"
+        with publish_new(final) as publication:
+            publication.staged_path.write_text("complete")
+            publication.commit(verify=_verify_file)
+        assert final.read_text() == "complete"
+        assert not list(tmp_path.glob(".ovtk-stage-*"))
+
+    def test_substituted_native_unknown_amd64_is_accepted(self, tmp_path, monkeypatch):
+        # Decision-logic control only; this does not qualify another machine.
+        self._substitute_machine_probe(monkeypatch, (0, 0x8664))
+        final = tmp_path / "result"
+        with publish_new(final) as publication:
+            publication.staged_path.write_text("complete")
+            publication.commit(verify=_verify_file)
+        assert final.read_text() == "complete"
+
+    @staticmethod
+    def _substitute_machine_probe(monkeypatch, machines, *, success=True):
+        kernel = native._kernel()
+
+        class SubstitutedMachineProbe:
+            def __getattr__(self, name):
+                return getattr(kernel, name)
+
+            def IsWow64Process2(self, handle, process, host):
+                assert handle == kernel.GetCurrentProcess()
+                if machines is not None:
+                    ctypes.cast(process, ctypes.POINTER(ctypes.c_ushort)).contents.value = machines[
+                        0
+                    ]
+                    ctypes.cast(host, ctypes.POINTER(ctypes.c_ushort)).contents.value = machines[1]
+                ctypes.set_last_error(0 if success else 87)
+                return success
+
+        monkeypatch.setattr(native, "_kernel", lambda: SubstitutedMachineProbe())
+
+    @pytest.mark.parametrize(
+        "machines",
+        [
+            pytest.param((0x014C, 0x8664), id="x86-process-on-amd64"),
+            pytest.param((0, 0x014C), id="native-x86"),
+            pytest.param((0, 0xAA64), id="native-arm64"),
+            pytest.param((0xA641, 0xAA64), id="arm64ec"),
+            pytest.param((0, 0xA641), id="native-arm64ec-code"),
+            pytest.param((0x8664, 0xAA64), id="x64-emulation-on-arm64"),
+            pytest.param((0x014C, 0xAA64), id="x86-emulation-on-arm64"),
+            pytest.param((0, 0), id="unknown-host"),
+            pytest.param((0xFFFF, 0x8664), id="unknown-process"),
+            pytest.param((0, 0xFFFF), id="unrecognized-host"),
+            pytest.param((0x8664, 0x8664), id="inconsistent-amd64-emulation"),
+            pytest.param((0xA641, 0x8664), id="arm64ec-process-on-amd64"),
+        ],
+    )
+    def test_architecture_guard_rejects_before_staging(self, tmp_path, monkeypatch, machines):
+        # Substituted API outputs cover rejection partitions, not native platforms.
+        self._substitute_machine_probe(monkeypatch, machines)
+        with pytest.raises(PublicationError, match="native AMD64/x64") as error:
+            with publish_new(tmp_path / "result"):
+                pytest.fail("Unqualified process reached staging")
+        assert terminal_text(error.value) == str(error.value)
+        assert list(tmp_path.iterdir()) == []
+
+    @pytest.mark.parametrize("success", [False, True], ids=["failure", "unset-success"])
+    def test_failed_or_unset_probe_rejects_before_staging(self, tmp_path, monkeypatch, success):
+        self._substitute_machine_probe(monkeypatch, None, success=success)
+        match = "Windows error 87" if not success else "native AMD64/x64"
+        with pytest.raises(PublicationError, match=match) as error:
+            with publish_new(tmp_path / "result"):
+                pytest.fail("Indeterminate probe reached staging")
+        assert str(error.value).isascii()
+        assert not any(ord(char) < 32 or ord(char) == 127 for char in str(error.value))
+        assert terminal_text(error.value) == str(error.value)
+        assert list(tmp_path.iterdir()) == []
+
+    @pytest.mark.parametrize("failure", [AttributeError("API missing"), OSError("probe failure")])
+    def test_unavailable_probe_rejects_before_staging(self, tmp_path, monkeypatch, failure):
+        def unavailable():
+            raise failure
+
+        monkeypatch.setattr(native, "_kernel", unavailable)
+        with pytest.raises(PublicationError, match="probe is unavailable") as error:
+            with publish_new(tmp_path / "result"):
+                pytest.fail("Unavailable API reached staging")
+        assert terminal_text(error.value) == str(error.value)
+        assert list(tmp_path.iterdir()) == []
+
+    @pytest.mark.parametrize("implementation", ["pypy", "unknown"])
+    def test_non_cpython_rejects_before_native_probe(self, tmp_path, monkeypatch, implementation):
+        monkeypatch.setattr(native.sys.implementation, "name", implementation)
+
+        def forbidden():
+            pytest.fail("Non-CPython reached the native probe")
+
+        monkeypatch.setattr(native, "_kernel", forbidden)
+        with pytest.raises(PublicationError, match="CPython 3.14") as error:
+            with publish_new(tmp_path / "result"):
+                pytest.fail("Non-CPython reached staging")
+        assert terminal_text(error.value) == str(error.value)
+        assert list(tmp_path.iterdir()) == []
+
     def test_long_unicode_paths_publish_on_qualified_volume(self, tmp_path):
         parent = tmp_path
         while len(str(parent)) < 280:

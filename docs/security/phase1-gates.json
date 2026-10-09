@@ -1,4 +1,491 @@
 {
+  "qualifier_correction": {
+    "preparation_collector_correction": {
+      "cause": "Supplemental preparation helper stripped the first porcelain status row's leading space and falsely truncated a path",
+      "effect": "Stopped before staging; no source/test or remote mutation",
+      "correction": "Use rstrip of CR/LF only, retaining leading porcelain columns; rerun the exact checks",
+      "receipt": {
+        "path": "artifacts/phase1/qualifier-correction/preparation-collector-correction.json",
+        "sha256": "e817f409b47cba8f77f54746a13e338ab2095f0ddc9bdfdfaf504169fab750c4"
+      }
+    },
+    "review": {
+      "reviewed_head": "1876a476931871ec95b59615cea8ad4f7888d015",
+      "review_decision": "REVISE PHASE 1; PHASE 2 DENIED",
+      "review_file_sha256": "7ffdf9cd17a5a4e1832cfc4ca03d908928a5a6b00203d5bdf86c8c6923eab267",
+      "owner_packet_sha256": "afc7d424f468f15dd25c02761ca8c005f07e3ee123e4a22b59ca7890be7f76d1",
+      "risk_file_sha256": "8b4d0ca8ea9b2a50ce13d66b6b44f5e85e8016c42b22e46f5811816adec2169d",
+      "contract": "R2 native AMD64/x64 Windows process plus CPython 3.14; fail before staging for other or indeterminate configurations",
+      "scope": [
+        "src/operational_variance_toolkit/storage/_windows_publication.py",
+        "tests/test_publication.py",
+        "docs/security/PHASE1_GATE_RECORD.md",
+        "docs/security/phase1-gates.json"
+      ],
+      "limitations": "Substituted architecture/implementation probes test decision logic only; no native x86/ARM64/non-CPython qualification. Existing platform deferrals remain.",
+      "docs_other_task": [
+        "CHANGELOG.md",
+        "README.md",
+        "SECURITY.md",
+        "docs/security/REMEDIATION_STATUS.md"
+      ],
+      "primary_sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-iswow64process2",
+          "contract": "Success supplies process/native WORDs; process 0 means not WOW64; native AMD64 0x8664 identifies x64; zero return fails."
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess",
+          "contract": "Use current-process pseudo handle; no new process access/credentials or close needed."
+        },
+        {
+          "url": "https://docs.python.org/3.14/library/sys.html#sys.implementation",
+          "contract": "Required implementation.name distinguishes cpython from language-version compatibility."
+        }
+      ]
+    },
+    "status": "PASS implementer correction checks; independent Phase 1 acceptance pending; Phase 2 remains denied",
+    "gates": {
+      "G0": "unchanged PASS for affected contracts",
+      "G1_W": "corrected candidate checks PASS; review pending",
+      "G1_P": "DEFERRED; unpassed",
+      "phase2": "DENIED at reviewed head; NOT STARTED"
+    },
+    "native_probe": {
+      "api": "IsWow64Process2(GetCurrentProcess())",
+      "accepted_process_machine": 0,
+      "accepted_native_machine": 34404,
+      "process_zero_semantics": "Successful UNKNOWN process code means not WOW64; native host must still be AMD64",
+      "interpreter": "CPython 3.14",
+      "failure_policy": "Other, unknown, unset, failed or unavailable probes reject before publication staging; no fallback",
+      "substitution_scope": "Guard decision logic only; does not qualify native x86, ARM64/ARM64EC, emulation, other interpreters or platforms"
+    },
+    "validation": {
+      "reviewed_head": "1876a476931871ec95b59615cea8ad4f7888d015",
+      "component": {
+        "tests": 266,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 41.933,
+        "testcases": 266,
+        "properties": {
+          "native-process-qualification": "{\"implementation\": \"cpython\", \"machines\": [0, 34404]}",
+          "sharing-setup-False": "{\"desired_access\": 2147483648, \"share_mode\": 3, \"setup_error\": 0, \"valid_handle\": true}",
+          "sharing-probe-False": "{\"desired_access\": 2147483648, \"share_mode\": 3, \"setup_error\": 0, \"valid_handle\": true, \"probe_valid\": false, \"probe_error\": 32}",
+          "sharing-setup-True": "{\"desired_access\": 2147483648, \"share_mode\": 7, \"setup_error\": 0, \"valid_handle\": true}",
+          "sharing-probe-True": "{\"desired_access\": 2147483648, \"share_mode\": 7, \"setup_error\": 0, \"valid_handle\": true, \"probe_valid\": true, \"probe_error\": 0}"
+        }
+      },
+      "cumulative": {
+        "tests": 540,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 432.367,
+        "testcases": 540,
+        "properties": {
+          "native-process-qualification": "{\"implementation\": \"cpython\", \"machines\": [0, 34404]}",
+          "sharing-setup-False": "{\"desired_access\": 2147483648, \"share_mode\": 3, \"setup_error\": 0, \"valid_handle\": true}",
+          "sharing-probe-False": "{\"desired_access\": 2147483648, \"share_mode\": 3, \"setup_error\": 0, \"valid_handle\": true, \"probe_valid\": false, \"probe_error\": 32}",
+          "sharing-setup-True": "{\"desired_access\": 2147483648, \"share_mode\": 7, \"setup_error\": 0, \"valid_handle\": true}",
+          "sharing-probe-True": "{\"desired_access\": 2147483648, \"share_mode\": 7, \"setup_error\": 0, \"valid_handle\": true, \"probe_valid\": true, \"probe_error\": 0}"
+        }
+      },
+      "commands": [
+        {
+          "command": [
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\compare_baseline.py"
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 2.4159729999955744
+        },
+        {
+          "command": [
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\check_prior_tests_utf8.py"
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 1.1446286999853328
+        },
+        {
+          "command": [
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "--maxfail=1",
+            "--basetemp=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\full-temp",
+            "--junitxml=C:\\Users\\andre\\AppData\\Local\\Temp\\codex-security-artifacts-4b08bdb0d6898fbc5723b760261bcede76db05996af9da618654ba7a72506232\\artifacts\\phase1\\qualifier-correction\\cumulative\\full.xml"
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 435.42956419999246
+        },
+        {
+          "command": [
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "-m",
+            "ruff",
+            "check",
+            "."
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 0.3039282000390813
+        },
+        {
+          "command": [
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK\\.venv\\Scripts\\python.exe",
+            "-m",
+            "ruff",
+            "format",
+            "--check",
+            "."
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 0.2844112999737263
+        },
+        {
+          "command": [
+            "git",
+            "-c",
+            "core.autocrlf=false",
+            "-C",
+            "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+            "diff",
+            "--check"
+          ],
+          "cwd": "C:\\Users\\andre\\Documents\\Codex\\2026-10-09\\use-the-attached-markdown-remediation-plan\\OVTK",
+          "exit_code": 0,
+          "elapsed_seconds": 0.09157689998392016
+        }
+      ],
+      "executed_tracked_files": 196,
+      "tracked_files_unchanged_during_both_runs": true,
+      "csv_byte_matches": 19,
+      "reader_table_matches": 9,
+      "metadata_statistics_summary_equal": true,
+      "prior_security_test_functions": 11,
+      "environment": {
+        "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "sqlite_version": "3.50.4",
+        "sqlite_compile_options": [
+          "ATOMIC_INTRINSICS=0",
+          "COMPILER=msvc-1944",
+          "DEFAULT_AUTOVACUUM",
+          "DEFAULT_CACHE_SIZE=-2000",
+          "DEFAULT_FILE_FORMAT=4",
+          "DEFAULT_JOURNAL_SIZE_LIMIT=-1",
+          "DEFAULT_MMAP_SIZE=0",
+          "DEFAULT_PAGE_SIZE=4096",
+          "DEFAULT_PCACHE_INITSZ=20",
+          "DEFAULT_RECURSIVE_TRIGGERS",
+          "DEFAULT_SECTOR_SIZE=4096",
+          "DEFAULT_SYNCHRONOUS=2",
+          "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+          "DEFAULT_WAL_SYNCHRONOUS=2",
+          "DEFAULT_WORKER_THREADS=0",
+          "DIRECT_OVERFLOW_READ",
+          "ENABLE_FTS3",
+          "ENABLE_FTS4",
+          "ENABLE_FTS5",
+          "ENABLE_MATH_FUNCTIONS",
+          "ENABLE_RTREE",
+          "MALLOC_SOFT_LIMIT=1024",
+          "MAX_ATTACHED=10",
+          "MAX_COLUMN=2000",
+          "MAX_COMPOUND_SELECT=500",
+          "MAX_DEFAULT_PAGE_SIZE=8192",
+          "MAX_EXPR_DEPTH=1000",
+          "MAX_FUNCTION_ARG=1000",
+          "MAX_LENGTH=1000000000",
+          "MAX_LIKE_PATTERN_LENGTH=50000",
+          "MAX_MMAP_SIZE=0x7fff0000",
+          "MAX_PAGE_COUNT=0xfffffffe",
+          "MAX_PAGE_SIZE=65536",
+          "MAX_SQL_LENGTH=1000000000",
+          "MAX_TRIGGER_DEPTH=1000",
+          "MAX_VARIABLE_NUMBER=32766",
+          "MAX_VDBE_OP=250000000",
+          "MAX_WORKER_THREADS=8",
+          "MUTEX_W32",
+          "OMIT_AUTOINIT",
+          "SYSTEM_MALLOC",
+          "TEMP_STORE=1",
+          "THREADSAFE=1"
+        ],
+        "dependencies": {
+          "altgraph": "0.17.5",
+          "asttokens": "3.0.2",
+          "attrs": "26.1.0",
+          "charset-normalizer": "3.4.9",
+          "colorama": "0.4.6",
+          "comm": "0.2.3",
+          "contourpy": "1.3.3",
+          "cycler": "0.12.1",
+          "debugpy": "1.8.21",
+          "executing": "2.2.1",
+          "fastjsonschema": "2.22.1",
+          "fonttools": "4.63.0",
+          "iniconfig": "2.3.0",
+          "ipykernel": "7.3.0",
+          "ipython": "9.16.0",
+          "ipython_pygments_lexers": "1.1.1",
+          "jedi": "0.20.0",
+          "jsonschema": "4.26.0",
+          "jsonschema-specifications": "2025.9.1",
+          "jupyter_client": "8.9.1",
+          "jupyter_core": "5.9.1",
+          "kiwisolver": "1.5.0",
+          "matplotlib": "3.11.1",
+          "matplotlib-inline": "0.2.2",
+          "nbclient": "0.11.0",
+          "nbformat": "5.10.4",
+          "nest-asyncio2": "1.7.2",
+          "numpy": "2.5.1",
+          "operational-variance-toolkit": "0.1.0",
+          "packaging": "26.2",
+          "pandas": "3.0.5",
+          "parso": "0.8.7",
+          "patsy": "1.0.2",
+          "pefile": "2024.8.26",
+          "pillow": "12.3.0",
+          "platformdirs": "4.11.0",
+          "pluggy": "1.6.0",
+          "prompt_toolkit": "3.0.53",
+          "psutil": "7.2.2",
+          "pure_eval": "0.2.3",
+          "Pygments": "2.20.0",
+          "pyinstaller": "6.21.0",
+          "pyinstaller-hooks-contrib": "2026.6",
+          "pyparsing": "3.3.2",
+          "pypdf": "6.14.2",
+          "pytest": "9.1.1",
+          "python-dateutil": "2.9.0.post0",
+          "pywin32-ctypes": "0.2.3",
+          "pyzmq": "27.1.0",
+          "referencing": "0.37.0",
+          "reportlab": "5.0.0",
+          "rpds-py": "2026.6.3",
+          "ruff": "0.16.1",
+          "scipy": "1.18.0",
+          "setuptools": "83.0.0",
+          "six": "1.17.0",
+          "stack-data": "0.6.3",
+          "statsmodels": "0.14.6",
+          "tornado": "6.5.7",
+          "traitlets": "5.16.0",
+          "typing_extensions": "4.16.0",
+          "tzdata": "2026.3",
+          "wcwidth": "0.8.2"
+        },
+        "publication_qualification": {
+          "implementation": "cpython",
+          "process_native_machines": [
+            0,
+            34404
+          ],
+          "platform_machine_informational": "AMD64",
+          "windows_registry": {
+            "CurrentBuild": "26200",
+            "UBR": 9457,
+            "EditionID": "Core",
+            "DisplayVersion": "25H2"
+          },
+          "qualified_fixed_local_NTFS_serial": 1141260418,
+          "lock_sha256": "7fd22afaa7ff412d2f1e7b63feacc3900a7e9a3a000d40256942034ff7eb26c8"
+        }
+      },
+      "executed_correction_files": {
+        "src/operational_variance_toolkit/storage/_windows_publication.py": "c766a0c59e8da00def173106a4fbe00c77ecd333823c6dc32e2b585c1eb045cb",
+        "tests/test_publication.py": "89ccf5cef39efb8c9babad718440e098507bb571d773e11082446759385f4593"
+      },
+      "qualification_scope": "Native x64 CPython/Windows/NTFS on this host; substituted guards do not qualify other architectures or interpreters",
+      "phase2": "DENIED; not started; corrected Phase 1 awaits independent review",
+      "G1_P": "Deferred; unpassed"
+    },
+    "receipt_digests": [
+      {
+        "path": "artifacts/phase1/qualifier-correction/authority-and-contract.json",
+        "sha256": "e8b5452228d1e04eaa8222cacccd60fb213f392402790c48df1cc1e35b45b5c0"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/retain_inputs.py",
+        "sha256": "d3b831419963b8a7d55486525d04c5fd50741262b828c482e26e9eb74f7822a7"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/inputs/phase1-review-1876a476.md",
+        "sha256": "7ffdf9cd17a5a4e1832cfc4ca03d908928a5a6b00203d5bdf86c8c6923eab267"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/inputs/OVTK-owner-decisions-2026-10-09.md",
+        "sha256": "afc7d424f468f15dd25c02761ca8c005f07e3ee123e4a22b59ca7890be7f76d1"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/inputs/phase1-risk-1876a476.json",
+        "sha256": "8b4d0ca8ea9b2a50ce13d66b6b44f5e85e8016c42b22e46f5811816adec2169d"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/inputs/OVTK-current-remediation-plan-R2.md",
+        "sha256": "fd5f22ce4a9bf9d439ba080598baf46a4efb1c2a8ad89035124b33fa24fd69aa"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/run_checks.py",
+        "sha256": "6733b98a4d17741b1e26aff8a7f80e15c8b46ca784d63b2d5dd2169b06c949f6"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/checks.json",
+        "sha256": "e88ee4d2fdeb4cc00fd397ade78fabf074c80b83be17ea206565c0541310f1f2"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/component.xml",
+        "sha256": "20587b97c3e761c14c9babce96470961e3f2c103ffa6e8266f1d6d124c370aaf"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/executed-files-before.json",
+        "sha256": "3af577ef74eb5e6f12b8f1e4c7a80dd7d6e3e39c0ad36193c34092b7829c7836"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/executed-files-after.json",
+        "sha256": "3af577ef74eb5e6f12b8f1e4c7a80dd7d6e3e39c0ad36193c34092b7829c7836"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-0.stdout.log",
+        "sha256": "ebd3f258cdacd9564fd5cf3ce042703c19ea427f719c1c4afb2ca1a53c1efb2a"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-1.stdout.log",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-1.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-2.stdout.log",
+        "sha256": "06e5b11d2de8e39aa7c4b1b31df2987775504a00282cba43c3262aeaceb4f040"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-3.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/component/check-3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/summarize_gates.py",
+        "sha256": "6ccbaf738caa5fae623d07677cc4c038e5e388e9dcb140519472c2cd93d77226"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/gate-summary.json",
+        "sha256": "825dd693b45fecba78878020e4ba7d3735a297a24d8fda45cc70f7399c33b077"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/compare_baseline.py",
+        "sha256": "e1f47d72a375de54d70fecfb8a95681400557119f2ffc8739e67b26c5bb3d8ee"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check_prior_tests_utf8.py",
+        "sha256": "2fd641c54772772cb7c6b489f76ef41db90ffc5911f7cd930be31599be367ecb"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/run_checks.py",
+        "sha256": "81fa764679a8a75a09df566bc2c5f6d0e360ae92ef7b0daf93608d42ef784f69"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/checks.json",
+        "sha256": "790e8c5249ba460e2ff769b072a72f770e976ec286754d8b6f2f79bd0c312a11"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/executed-files-before.json",
+        "sha256": "3af577ef74eb5e6f12b8f1e4c7a80dd7d6e3e39c0ad36193c34092b7829c7836"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/executed-files-after.json",
+        "sha256": "3af577ef74eb5e6f12b8f1e4c7a80dd7d6e3e39c0ad36193c34092b7829c7836"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/compatibility-comparison.json",
+        "sha256": "753a5028c4b7f58915a64ce1e3558d09e76b5822f6d9fec90cc4cc4551507c1f"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/candidate-environment.json",
+        "sha256": "7f9f91b4c2485a86a2d5def09144af93600727e1c25c6fdae2f8fce3c0e6e612"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/prior-security-test-preservation.json",
+        "sha256": "5660170519f664f5fbe9e9ce87df67ce9aa2bbc243c6b773056f6970a0e551c0"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/full.xml",
+        "sha256": "c2de504d4c4c6e83592124ab68cb64dee0e22a7c8656005c32537a97fe087cb1"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-0.stdout.log",
+        "sha256": "a28c8e835b905f9d921ce485576b5e91c8efce0fed2ebc11d7a1a46e61762f00"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-1.stdout.log",
+        "sha256": "f6aefbcc462dc9803f43ee82c98a96d45fd1d5992719c3ad1c1e1423b906035c"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-1.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-2.stdout.log",
+        "sha256": "a971299309885d38149aa7b9db2f2cba888e70f9db2f645a0d181549f847fc88"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-3.stdout.log",
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-4.stdout.log",
+        "sha256": "06e5b11d2de8e39aa7c4b1b31df2987775504a00282cba43c3262aeaceb4f040"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-4.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-5.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "artifacts/phase1/qualifier-correction/cumulative/check-5.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "historical_record": "Existing validation sections below describe the pre-correction candidate, including its earlier sharing-fixture failure. Independent review denied advancement at 1876a476 due to the qualification omission; this record supplies the correction evidence.",
+    "dependent_owner_recommendations": "Advisory packet retained by digest; no proposed thresholds, spreadsheet targets, release layout or scope expansions are approved by this correction."
+  },
   "controlling_plan": {
     "revision": "R2",
     "sha256": "fd5f22ce4a9bf9d439ba080598baf46a4efb1c2a8ad89035124b33fa24fd69aa",
@@ -78,9 +565,9 @@
   ],
   "gates": {
     "G0": "PASS for affected Phase1 contracts; dependent owner blocks remain explicit",
-    "G1_W": "PASS implementer evidence; independent phase approval pending",
+    "G1_W": "Corrected candidate checks PASS; independent Phase 1 acceptance pending; see qualifier_correction",
     "G1_P": "DEFERRED; unpassed and disabled for the new publication API",
-    "phase2": "NOT STARTED; awaits delegated review task approval"
+    "phase2": "DENIED at reviewed head 1876a476; NOT STARTED; corrected candidate awaits review"
   },
   "environment": {
     "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",

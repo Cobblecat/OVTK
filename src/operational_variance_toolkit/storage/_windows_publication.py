@@ -56,6 +56,14 @@ def _kernel():
     kernel.GetVolumeInformationW.restype = wintypes.BOOL
     kernel.MoveFileExW.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.DWORD]
     kernel.MoveFileExW.restype = wintypes.BOOL
+    kernel.GetCurrentProcess.argtypes = []
+    kernel.GetCurrentProcess.restype = wintypes.HANDLE
+    kernel.IsWow64Process2.argtypes = [
+        wintypes.HANDLE,
+        ctypes.POINTER(wintypes.USHORT),
+        ctypes.POINTER(wintypes.USHORT),
+    ]
+    kernel.IsWow64Process2.restype = wintypes.BOOL
     return kernel
 
 
@@ -65,6 +73,27 @@ def _native(path: Path) -> str:
 
 def _failure(operation: str) -> PublicationError:
     return PublicationError(f"{operation} failed (Windows error {ctypes.get_last_error()})")
+
+
+def _machine_types() -> tuple[int, int]:
+    """Read process/native machine types; a failed or unavailable probe rejects.
+
+    IsWow64Process2 reports process UNKNOWN (0) for a native process, not an
+    unknown host. Only UNKNOWN/AMD64 (0x8664) qualifies below. A 64-bit pointer
+    or platform.machine string alone cannot exclude x64 emulation on ARM64.
+    https://learn.microsoft.com/en-us/windows/win32/api/wow64apiset/nf-wow64apiset-iswow64process2
+    """
+    try:
+        kernel = _kernel()
+        # Sentinels also reject a nominally successful probe with unset outputs.
+        process, host = wintypes.USHORT(0xFFFF), wintypes.USHORT(0xFFFF)
+        if not kernel.IsWow64Process2(
+            kernel.GetCurrentProcess(), ctypes.byref(process), ctypes.byref(host)
+        ):
+            raise _failure("Process architecture probe")
+    except (AttributeError, OSError) as exc:
+        raise PublicationError("Publish-new process architecture probe is unavailable") from exc
+    return process.value, host.value
 
 
 def reject_reparse(path: Path) -> None:
@@ -77,11 +106,13 @@ def qualify_destination(destination: Path) -> int:
     """Check OS and existing parent without creating any public/private paths."""
     if sys.platform != "win32":
         raise PublicationError("Publish-new is unqualified on this platform; G1-P is deferred")
+    if sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 14):
+        raise PublicationError("Publish-new requires the qualified CPython 3.14 runtime")
+    if _machine_types() != (0, 0x8664):  # native process / IMAGE_FILE_MACHINE_AMD64
+        raise PublicationError("Publish-new requires native AMD64/x64 Windows and CPython process")
     kernel = _kernel()
     import winreg
 
-    if sys.version_info[:2] != (3, 14):
-        raise PublicationError("Publish-new requires the qualified CPython 3.14 runtime")
     with winreg.OpenKey(
         winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion"
     ) as key:
