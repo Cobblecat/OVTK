@@ -9,6 +9,7 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from pathlib import Path
 
+from operational_variance_toolkit.console.output import terminal_text
 from operational_variance_toolkit.errors import DatabaseError, DataValidationError, ToolkitError
 from operational_variance_toolkit.sandbox.application import verify_sandbox
 from operational_variance_toolkit.sandbox.domain import VerifiedSandbox
@@ -63,8 +64,8 @@ class ConsoleSession:
         if self.database_path is None:
             return "WMS[NO DB]> "
         if self.mode is ConsoleMode.SANDBOX:
-            return f"WMS[RW:{self.database_path.stem}]> "
-        return f"WMS[RO:{self.database_path.stem}]> "
+            return f"WMS[RW:{terminal_text(self.database_path.stem)}]> "
+        return f"WMS[RO:{terminal_text(self.database_path.stem)}]> "
 
     @property
     def sandbox(self) -> VerifiedSandbox:

@@ -43,6 +43,7 @@ from operational_variance_toolkit.application.wms_investigation import (
     generate_wms_investigation,
 )
 from operational_variance_toolkit.config import load_project_config
+from operational_variance_toolkit.console.output import terminal_text, write_line
 from operational_variance_toolkit.errors import (
     ConfigurationError,
     DataValidationError,
@@ -71,8 +72,15 @@ from operational_variance_toolkit.wms.domain.reports import ReportResult
 from operational_variance_toolkit.wms.storage.repositories import WMS_TABLES
 
 
+class _TerminalArgumentParser(ArgumentParser):
+    """Encode diagnostic data while preserving argparse's usage and help layout."""
+
+    def error(self, message: str) -> None:
+        super().error(terminal_text(message))
+
+
 def build_parser() -> ArgumentParser:
-    parser = ArgumentParser(
+    parser = _TerminalArgumentParser(
         prog="operational-variance-toolkit",
         description="Synthetic warehouse data and inventory variance investigation toolkit.",
     )
@@ -362,24 +370,24 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         return handler(args)
     except ConfigurationError as exc:
-        print(f"Configuration error: {exc}", file=sys.stderr)
+        write_line(f"Configuration error: {exc}", file=sys.stderr)
         return exc.exit_code
     except ToolkitError as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+        write_line(f"Error: {exc}", file=sys.stderr)
         return exc.exit_code
 
 
 def _handle_config_check(args: Namespace) -> int:
     config = load_project_config(args.config)
-    print("Configuration valid")
-    print(f"Scenario: {config.run.scenario_name} {config.run.scenario_version}")
-    print(f"Seed: {config.run.seed}")
-    print(
+    write_line("Configuration valid")
+    write_line(f"Scenario: {config.run.scenario_name} {config.run.scenario_version}")
+    write_line(f"Seed: {config.run.seed}")
+    write_line(
         "Operating period (UTC): "
         f"{_format_utc(config.run.start_utc)} to {_format_utc(config.run.end_utc)}"
     )
-    print(f"Facility timezone: {config.run.facility_timezone}")
-    print(f"Configuration SHA-256: {config.configuration_hash}")
+    write_line(f"Facility timezone: {config.run.facility_timezone}")
+    write_line(f"Configuration SHA-256: {config.configuration_hash}")
     return 0
 
 
@@ -431,7 +439,7 @@ def _handle_generate(args: Namespace) -> int:
 
 def _handle_scenario_check(args: Namespace) -> int:
     validation = validate_scenario_artifacts(args.database, args.ground_truth)
-    print(f"Scenario validation status: {_validation_status(validation)}")
+    write_line(f"Scenario validation status: {_validation_status(validation)}")
     _print_validation_details(validation)
     return 0 if validation.passed else DataValidationError.exit_code
 
@@ -498,12 +506,12 @@ def _handle_describe(args: Namespace) -> int:
 
 def _handle_clone_sandbox(args: Namespace) -> int:
     result = clone_sandbox(args.source, args.destination)
-    print("Sandbox created and verified")
-    print(f"Sandbox database: {result.database_path}")
-    print(f"Sandbox manifest: {result.manifest_path}")
-    print(f"Sandbox ID: {result.manifest.sandbox_id}")
-    print(f"Source SHA-256: {result.manifest.source_database_sha256}")
-    print(f"Initial sandbox SHA-256: {result.manifest.initial_sandbox_sha256}")
+    write_line("Sandbox created and verified")
+    write_line(f"Sandbox database: {result.database_path}")
+    write_line(f"Sandbox manifest: {result.manifest_path}")
+    write_line(f"Sandbox ID: {result.manifest.sandbox_id}")
+    write_line(f"Source SHA-256: {result.manifest.source_database_sha256}")
+    write_line(f"Initial sandbox SHA-256: {result.manifest.initial_sandbox_sha256}")
     return 0
 
 
@@ -511,9 +519,9 @@ def _handle_report(args: Namespace) -> int:
     if args.list_reports:
         if args.name is not None:
             raise DataValidationError("Use either --list or --name, not both")
-        print("Registered schema-3 WMS reports:")
+        write_line("Registered schema-3 WMS reports:")
         for spec in available_reports():
-            print(f"  {spec.code}: {spec.name}")
+            write_line(f"  {spec.code}: {spec.name}")
         return 0
     if args.name is None:
         raise DataValidationError("report requires --list or --name")
@@ -536,236 +544,238 @@ def _handle_report(args: Namespace) -> int:
 
 
 def _print_initialize_result(result: InitializeDatabaseResult) -> None:
-    print("Phase 1 database initialized")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Database path: {result.database_path}")
-    print(f"Configuration SHA-256: {result.config_hash}")
-    print("Entity counts:")
+    write_line("Phase 1 database initialized")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Configuration SHA-256: {result.config_hash}")
+    write_line("Entity counts:")
     for table_name in PHASE1_TABLES:
         if table_name in result.counts:
-            print(f"  {table_name}: {result.counts[table_name]}")
-    print(f"Validation status: {_validation_status(result.validation)}")
+            write_line(f"  {table_name}: {result.counts[table_name]}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_initialize_wms_result(result: InitializeWmsFoundationResult) -> None:
-    print("Schema-3 WMS initialized")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Database path: {result.database_path}")
-    print(f"Schema version: {result.run_metadata.schema_version}")
-    print(f"Configuration SHA-256: {result.run_metadata.config_hash}")
-    print("Entity counts:")
+    write_line("Schema-3 WMS initialized")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Schema version: {result.run_metadata.schema_version}")
+    write_line(f"Configuration SHA-256: {result.run_metadata.config_hash}")
+    write_line("Entity counts:")
     for table_name in WMS_TABLES:
         if result.counts.get(table_name, 0) > 0:
-            print(f"  {table_name}: {result.counts[table_name]}")
-    print(f"Validation status: {_validation_status(result.validation)}")
+            write_line(f"  {table_name}: {result.counts[table_name]}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_generate_result(result: GeneratePhase2Result) -> None:
     if result.ground_truth_path is None:
-        print("Phase 2 baseline database generated")
+        write_line("Phase 2 baseline database generated")
     else:
-        print("Phase 3 investigation database generated")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Database path: {result.database_path}")
+        write_line("Phase 3 investigation database generated")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Database path: {result.database_path}")
     if result.ground_truth_path is not None:
-        print(f"Restricted ground-truth path: {result.ground_truth_path}")
-    print(f"Configuration SHA-256: {result.config_hash}")
-    print("Entity counts:")
+        write_line(f"Restricted ground-truth path: {result.ground_truth_path}")
+    write_line(f"Configuration SHA-256: {result.config_hash}")
+    write_line("Entity counts:")
     for table_name in PHASE2_TABLES:
         if table_name in result.counts:
-            print(f"  {table_name}: {result.counts[table_name]}")
-    print("Generated transaction counts:")
-    print(f"  trips: {result.operation_counts.trips}")
-    print(f"  pick_events: {result.operation_counts.pick_events}")
-    print(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
-    print(f"  qa_events: {result.operation_counts.qa_events}")
-    print(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
-    print(f"  system_events: {result.operation_counts.system_events}")
-    print(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
-    print(f"Validation status: {_validation_status(result.validation)}")
+            write_line(f"  {table_name}: {result.counts[table_name]}")
+    write_line("Generated transaction counts:")
+    write_line(f"  trips: {result.operation_counts.trips}")
+    write_line(f"  pick_events: {result.operation_counts.pick_events}")
+    write_line(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
+    write_line(f"  qa_events: {result.operation_counts.qa_events}")
+    write_line(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
+    write_line(f"  system_events: {result.operation_counts.system_events}")
+    write_line(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_generate_wms_result(result: GenerateWmsBaselineResult) -> None:
-    print("Schema-3 baseline WMS generated")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Database path: {result.database_path}")
-    print(f"Schema version: {result.run_metadata.schema_version}")
-    print(f"Configuration SHA-256: {result.config_hash}")
-    print("Generated operation counts:")
-    print(f"  trips: {result.operation_counts.trips}")
-    print(f"  pick_events: {result.operation_counts.pick_events}")
-    print(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
-    print(f"  qa_events: {result.operation_counts.qa_events}")
-    print(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
-    print(f"  system_events: {result.operation_counts.system_events}")
-    print(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
-    print(f"Validation status: {_validation_status(result.validation)}")
+    write_line("Schema-3 baseline WMS generated")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Schema version: {result.run_metadata.schema_version}")
+    write_line(f"Configuration SHA-256: {result.config_hash}")
+    write_line("Generated operation counts:")
+    write_line(f"  trips: {result.operation_counts.trips}")
+    write_line(f"  pick_events: {result.operation_counts.pick_events}")
+    write_line(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
+    write_line(f"  qa_events: {result.operation_counts.qa_events}")
+    write_line(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
+    write_line(f"  system_events: {result.operation_counts.system_events}")
+    write_line(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_generate_wms_investigation_result(
     result: GenerateWmsInvestigationResult,
 ) -> None:
-    print("Schema-3 investigation WMS generated")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Database path: {result.database_path}")
-    print(f"Restricted ground-truth path: {result.ground_truth_path}")
-    print(f"Schema version: {result.run_metadata.schema_version}")
-    print(f"Configuration SHA-256: {result.config_hash}")
-    print("Generated operation counts:")
-    print(f"  trips: {result.operation_counts.trips}")
-    print(f"  pick_events: {result.operation_counts.pick_events}")
-    print(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
-    print(f"  qa_events: {result.operation_counts.qa_events}")
-    print(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
-    print(f"  system_events: {result.operation_counts.system_events}")
-    print(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
-    print(f"Validation status: {_validation_status(result.validation)}")
-    print(f"Scenario validation status: {_validation_status(result.scenario_validation)}")
+    write_line("Schema-3 investigation WMS generated")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Restricted ground-truth path: {result.ground_truth_path}")
+    write_line(f"Schema version: {result.run_metadata.schema_version}")
+    write_line(f"Configuration SHA-256: {result.config_hash}")
+    write_line("Generated operation counts:")
+    write_line(f"  trips: {result.operation_counts.trips}")
+    write_line(f"  pick_events: {result.operation_counts.pick_events}")
+    write_line(f"  replenishment_tasks: {result.operation_counts.replenishment_tasks}")
+    write_line(f"  qa_events: {result.operation_counts.qa_events}")
+    write_line(f"  inventory_adjustments: {result.operation_counts.inventory_adjustments}")
+    write_line(f"  system_events: {result.operation_counts.system_events}")
+    write_line(f"  closing_snapshots: {result.operation_counts.closing_snapshots}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
+    write_line(f"Scenario validation status: {_validation_status(result.scenario_validation)}")
 
 
 def _print_reconstruct_result(result: ReconstructDatabaseResult) -> None:
-    print("Inventory reconstruction complete")
-    print(f"Run ID: {result.run_metadata.run_id}")
-    print(f"Source database: {result.database_path}")
-    print(f"Output directory: {result.output_path}")
-    print(f"Source SHA-256: {result.source_sha256_after}")
-    print(f"Source preserved: {result.source_sha256_before == result.source_sha256_after}")
-    print("Derived row counts:")
+    write_line("Inventory reconstruction complete")
+    write_line(f"Run ID: {result.run_metadata.run_id}")
+    write_line(f"Source database: {result.database_path}")
+    write_line(f"Output directory: {result.output_path}")
+    write_line(f"Source SHA-256: {result.source_sha256_after}")
+    write_line(f"Source preserved: {result.source_sha256_before == result.source_sha256_after}")
+    write_line("Derived row counts:")
     for table_name in sorted(result.row_counts):
-        print(f"  {table_name}: {result.row_counts[table_name]}")
-    print(
+        write_line(f"  {table_name}: {result.row_counts[table_name]}")
+    write_line(
         "Reconciliation status: "
         f"{result.reconciliation_status} "
         f"({result.reconciliation_failure_count} difference(s))"
     )
-    print(f"Validation status: {_validation_status(result.validation)}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_analyze_result(result: AnalyzeDatabaseResult) -> None:
-    print("Phase 5 statistical analysis complete")
-    print(f"Run ID: {result.run_id}")
-    print(f"Source database: {result.database_path}")
-    print(f"Reconstruction: {result.reconstruction_path}")
-    print(f"Output directory: {result.output_path}")
-    print(f"Source SHA-256: {result.source_sha256_after}")
-    print(f"Source preserved: {result.source_sha256_before == result.source_sha256_after}")
-    print(f"Analysis configuration SHA-256: {result.configuration_sha256}")
-    print(f"Primary model: {result.model_kind} ({result.covariance})")
-    print(f"Crude target risk difference: {result.crude_risk_difference:.6f}")
-    print(f"Adjusted target risk difference: {result.adjusted_risk_difference:.6f}")
-    print(f"Proportional attenuation: {result.proportional_attenuation:.2%}")
-    print(f"Material attenuation: {result.material_attenuation}")
-    print(f"All six hypotheses present: {result.hypotheses_complete}")
-    print(f"Ordinary analysis loaded ground truth: {result.ordinary_analysis_ground_truth_loaded}")
-    print("Statistical output row counts:")
+    write_line("Phase 5 statistical analysis complete")
+    write_line(f"Run ID: {result.run_id}")
+    write_line(f"Source database: {result.database_path}")
+    write_line(f"Reconstruction: {result.reconstruction_path}")
+    write_line(f"Output directory: {result.output_path}")
+    write_line(f"Source SHA-256: {result.source_sha256_after}")
+    write_line(f"Source preserved: {result.source_sha256_before == result.source_sha256_after}")
+    write_line(f"Analysis configuration SHA-256: {result.configuration_sha256}")
+    write_line(f"Primary model: {result.model_kind} ({result.covariance})")
+    write_line(f"Crude target risk difference: {result.crude_risk_difference:.6f}")
+    write_line(f"Adjusted target risk difference: {result.adjusted_risk_difference:.6f}")
+    write_line(f"Proportional attenuation: {result.proportional_attenuation:.2%}")
+    write_line(f"Material attenuation: {result.material_attenuation}")
+    write_line(f"All six hypotheses present: {result.hypotheses_complete}")
+    write_line(
+        f"Ordinary analysis loaded ground truth: {result.ordinary_analysis_ground_truth_loaded}"
+    )
+    write_line("Statistical output row counts:")
     for file_name in sorted(result.row_counts):
-        print(f"  {file_name}: {result.row_counts[file_name]}")
+        write_line(f"  {file_name}: {result.row_counts[file_name]}")
 
 
 def _print_build_reporting_result(result: BuildReportingResult) -> None:
-    print("Phase 6 reporting bundle complete")
-    print(f"Run ID: {result.run_id}")
-    print(f"Output directory: {result.output_path}")
-    print(f"Executed notebook: {result.notebook_path}")
-    print(f"Executive report: {result.executive_report_path}")
-    print(f"Figures: {result.figure_count}")
-    print(
+    write_line("Phase 6 reporting bundle complete")
+    write_line(f"Run ID: {result.run_id}")
+    write_line(f"Output directory: {result.output_path}")
+    write_line(f"Executed notebook: {result.notebook_path}")
+    write_line(f"Executive report: {result.executive_report_path}")
+    write_line(f"Figures: {result.figure_count}")
+    write_line(
         "Reconciliation: "
         f"{result.reconciliation_rows} rows, "
         f"{result.reconciliation_difference_rows} differences"
     )
-    print(f"Files: {result.file_count}")
-    print(f"Reporting manifest SHA-256: {result.manifest_sha256}")
+    write_line(f"Files: {result.file_count}")
+    write_line(f"Reporting manifest SHA-256: {result.manifest_sha256}")
 
 
 def _print_package_release_result(result: PackageReleaseResult) -> None:
-    print(f"Release {result.version} packaged locally")
-    print(f"Source archive: {result.source_archive_path}")
-    print(f"Source SHA-256: {result.source_archive_sha256}")
-    print(f"Source checksum: {result.source_checksum_path}")
-    print(f"Optional ground-truth archive: {result.truth_archive_path}")
-    print(f"Ground-truth SHA-256: {result.truth_archive_sha256}")
-    print(f"Ground-truth checksum: {result.truth_checksum_path}")
-    print(f"Combined checksums: {result.combined_checksum_path}")
-    print(f"Primary files: {result.source_file_count}")
-    print(f"Optional truth files: {result.truth_file_count}")
-    print(f"Leakage status: {result.leakage_status}")
+    write_line(f"Release {result.version} packaged locally")
+    write_line(f"Source archive: {result.source_archive_path}")
+    write_line(f"Source SHA-256: {result.source_archive_sha256}")
+    write_line(f"Source checksum: {result.source_checksum_path}")
+    write_line(f"Optional ground-truth archive: {result.truth_archive_path}")
+    write_line(f"Ground-truth SHA-256: {result.truth_archive_sha256}")
+    write_line(f"Ground-truth checksum: {result.truth_checksum_path}")
+    write_line(f"Combined checksums: {result.combined_checksum_path}")
+    write_line(f"Primary files: {result.source_file_count}")
+    write_line(f"Optional truth files: {result.truth_file_count}")
+    write_line(f"Leakage status: {result.leakage_status}")
 
 
 def _print_validate_result(result: ValidateDatasetResult) -> None:
-    print(f"Validation status: {_validation_status(result.validation)}")
-    print(f"Database path: {result.database_path}")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
+    write_line(f"Database path: {result.database_path}")
     _print_validation_details(result.validation)
 
 
 def _print_describe_result(result: DescribeDatasetResult) -> None:
     metadata = result.run_metadata
-    print("Dataset description")
-    print(f"Database path: {result.database_path}")
-    print(f"Run ID: {metadata.run_id}")
-    print(f"Scenario: {metadata.scenario_name} {metadata.scenario_version}")
-    print(f"Seed: {metadata.seed}")
-    print(f"Schema version: {metadata.schema_version}")
-    print(f"Generator version: {metadata.generator_version}")
-    print(f"Configuration SHA-256: {metadata.config_hash}")
-    print(
+    write_line("Dataset description")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Run ID: {metadata.run_id}")
+    write_line(f"Scenario: {metadata.scenario_name} {metadata.scenario_version}")
+    write_line(f"Seed: {metadata.seed}")
+    write_line(f"Schema version: {metadata.schema_version}")
+    write_line(f"Generator version: {metadata.generator_version}")
+    write_line(f"Configuration SHA-256: {metadata.config_hash}")
+    write_line(
         f"Operating period (UTC): {metadata.simulation_start_utc} to {metadata.simulation_end_utc}"
     )
-    print(f"Facility timezone: {metadata.facility_timezone}")
-    print("Table counts:")
+    write_line(f"Facility timezone: {metadata.facility_timezone}")
+    write_line("Table counts:")
     for table_name in PHASE2_TABLES:
         if table_name in result.table_counts:
-            print(f"  {table_name}: {result.table_counts[table_name]}")
-    print("Opening inventory by zone:")
+            write_line(f"  {table_name}: {result.table_counts[table_name]}")
+    write_line("Opening inventory by zone:")
     for zone_code, qty_cases in result.opening_totals_by_zone:
-        print(f"  {zone_code}: {qty_cases} cases")
+        write_line(f"  {zone_code}: {qty_cases} cases")
     if result.closing_totals_by_zone:
-        print("Closing inventory by zone:")
+        write_line("Closing inventory by zone:")
         for zone_code, qty_cases in result.closing_totals_by_zone:
-            print(f"  {zone_code}: {qty_cases} cases")
-    print(f"Validation status: {_validation_status(result.validation)}")
+            write_line(f"  {zone_code}: {qty_cases} cases")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_describe_wms_result(result: DescribeWmsResult) -> None:
     metadata = result.run_metadata
-    print("Schema-3 WMS description")
-    print(f"Database path: {result.database_path}")
-    print(f"Run ID: {metadata.run_id}")
-    print(f"Seed: {metadata.seed}")
-    print(f"Schema version: {metadata.schema_version}")
-    print(f"Generator version: {metadata.generator_version}")
-    print(f"Configuration SHA-256: {metadata.config_hash}")
-    print(
+    write_line("Schema-3 WMS description")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Run ID: {metadata.run_id}")
+    write_line(f"Seed: {metadata.seed}")
+    write_line(f"Schema version: {metadata.schema_version}")
+    write_line(f"Generator version: {metadata.generator_version}")
+    write_line(f"Configuration SHA-256: {metadata.config_hash}")
+    write_line(
         f"Operating period (UTC): {metadata.simulation_start_utc} to {metadata.simulation_end_utc}"
     )
-    print(f"Facility timezone: {metadata.facility_timezone}")
-    print("Table counts:")
+    write_line(f"Facility timezone: {metadata.facility_timezone}")
+    write_line("Table counts:")
     for table_name in WMS_TABLES:
-        print(f"  {table_name}: {result.table_counts[table_name]}")
-    print("Live inventory by zone:")
+        write_line(f"  {table_name}: {result.table_counts[table_name]}")
+    write_line("Live inventory by zone:")
     for zone_code, qty_cases in result.live_totals_by_zone:
-        print(f"  {zone_code}: {qty_cases} cases")
-    print("Snapshot batches:")
+        write_line(f"  {zone_code}: {qty_cases} cases")
+    write_line("Snapshot batches:")
     for batch_id, snapshot_type, snapshot_utc, row_count in result.snapshot_batches:
-        print(f"  {batch_id}: {snapshot_type}, {snapshot_utc}, {row_count} rows")
-    print(f"Validation status: {_validation_status(result.validation)}")
+        write_line(f"  {batch_id}: {snapshot_type}, {snapshot_utc}, {row_count} rows")
+    write_line(f"Validation status: {_validation_status(result.validation)}")
 
 
 def _print_report_result(result: ReportResult, output_path: Path | None) -> None:
-    print(f"Report: {result.spec.code} ({result.spec.name})")
-    print(f"Run ID: {result.run_id}")
-    print(f"Database path: {result.database_path}")
-    print(f"Schema version: {result.schema_version}")
-    print(f"As of: {result.as_of_utc}")
-    print(f"Generated at: {result.generated_at_utc}")
-    print(f"Parameters: {dict(result.parameters)}")
-    print(f"Row count: {result.row_count}")
+    write_line(f"Report: {result.spec.code} ({result.spec.name})")
+    write_line(f"Run ID: {result.run_id}")
+    write_line(f"Database path: {result.database_path}")
+    write_line(f"Schema version: {result.schema_version}")
+    write_line(f"As of: {result.as_of_utc}")
+    write_line(f"Generated at: {result.generated_at_utc}")
+    write_line(f"Parameters: {dict(result.parameters)}")
+    write_line(f"Row count: {result.row_count}")
     if output_path is not None:
-        print(f"CSV output: {output_path}")
+        write_line(f"CSV output: {output_path}")
         return
-    print("\t".join(result.spec.display_columns))
+    print("\t".join(terminal_text(column) for column in result.spec.display_columns))
     for row in result.rows:
-        print("\t".join("" if value is None else str(value) for value in row))
+        print("\t".join("" if value is None else terminal_text(value) for value in row))
 
 
 def _validation_status(result: ValidationResult) -> str:
@@ -776,18 +786,18 @@ def _validation_status(result: ValidationResult) -> str:
 
 def _print_validation_details(result: ValidationResult) -> None:
     if result.hard_failures:
-        print("Hard failures:")
+        write_line("Hard failures:")
         for issue in result.hard_failures:
-            print(f"  [{issue.category}] {issue.message}")
+            write_line(f"  [{issue.category}] {issue.message}")
     else:
-        print("Hard failures: none")
+        write_line("Hard failures: none")
 
     if result.warnings:
-        print("Warnings:")
+        write_line("Warnings:")
         for issue in result.warnings:
-            print(f"  [{issue.category}] {issue.message}")
+            write_line(f"  [{issue.category}] {issue.message}")
     else:
-        print("Warnings: none")
+        write_line("Warnings: none")
 
 
 def _format_utc(value) -> str:

@@ -25,6 +25,18 @@ def test_help_succeeds(run_tool: Callable[..., subprocess.CompletedProcess[str]]
     assert "scenario-check" in result.stdout
 
 
+def test_unknown_argument_controls_are_literal_in_subprocess_errors(
+    run_tool: Callable[..., subprocess.CompletedProcess[str]],
+) -> None:
+    result = run_tool("console", "--unknown=\x1b[2J\r\n\t\x9b")
+
+    assert result.returncode == 2
+    assert result.stdout == ""
+    assert result.stderr.startswith("usage: operational-variance-toolkit ")
+    assert result.stderr.endswith(r"--unknown=\x1b[2J\r\n\t\x9b" + "\n")
+    assert "\x1b" not in result.stderr and "\x9b" not in result.stderr
+
+
 def test_version_succeeds_and_contains_installed_version(
     run_tool: Callable[..., subprocess.CompletedProcess[str]],
 ) -> None:

@@ -384,7 +384,8 @@ class CommandDispatcher:
             help_text = COMMAND_HELP.get(command_name)
             if help_text is None:
                 raise ConsoleCommandError(f"Unknown help topic: {arguments[0]}")
-            self._renderer.write(help_text)
+            for help_line in help_text.split("\n"):
+                self._renderer.write(help_line)
             return DispatchResult()
         self._renderer.write("Available commands:")
         for command_name in COMMAND_HELP:

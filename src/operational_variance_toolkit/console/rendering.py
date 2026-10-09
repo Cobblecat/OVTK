@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 
 from prompt_toolkit.shortcuts import clear as clear_terminal
 
+from operational_variance_toolkit.console.output import terminal_text, write_line
 from operational_variance_toolkit.console.session import ConsoleMode, ConsoleSession
 from operational_variance_toolkit.sandbox.domain import CloneSandboxResult
 from operational_variance_toolkit.validation.result import ValidationResult
@@ -26,13 +27,13 @@ class ConsoleRenderer:
         self.no_style = no_style or not stdout.isatty()
 
     def write(self, message: str = "") -> None:
-        print(message, file=self._stdout)
+        write_line(message, file=self._stdout)
 
     def error(self, message: str) -> None:
-        print(f"Error: {message}", file=self._stderr)
+        write_line(f"Error: {message}", file=self._stderr)
 
     def not_found(self, message: str) -> None:
-        print(f"Not found: {message}", file=self._stderr)
+        write_line(f"Not found: {message}", file=self._stderr)
 
     def multiline_submission_error(self) -> None:
         print("Multiple commands in one submission are not supported.", file=self._stderr)
@@ -343,7 +344,7 @@ def _label(column: str) -> str:
 def _display_value(column: str, value: object, session: ConsoleSession) -> str:
     if value is None:
         return "-"
-    text = str(value)
+    text = terminal_text(value)
     if not (column.endswith("_utc") or "time" in column.lower()):
         return text
     try:
