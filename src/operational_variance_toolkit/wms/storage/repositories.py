@@ -61,7 +61,7 @@ class WmsFoundationRepository:
         self._connection.row_factory = sqlite3.Row
 
     def run_metadata(self) -> WmsRunMetadata:
-        row = self._connection.execute(
+        rows = self._connection.execute(
             """
             SELECT
                 run_id,
@@ -75,10 +75,30 @@ class WmsFoundationRepository:
                 generated_at_utc
             FROM simulation_run
             """
-        ).fetchone()
-        if row is None:
-            raise sqlite3.DatabaseError("Expected one schema-3 simulation_run row")
-        return WmsRunMetadata(**dict(row))
+        ).fetchmany(2)
+        if len(rows) != 1:
+            found = "at least 2" if len(rows) == 2 else "0"
+            raise sqlite3.DatabaseError(
+                f"Expected exactly one schema-3 simulation_run row, found {found}"
+            )
+        return WmsRunMetadata(**dict(rows[0]))
+
+    def conflicting_run_tables(self, run_id: str) -> tuple[str, ...]:
+        """Find required WMS tables containing another or a missing run identity."""
+
+        # Names come only from the fixed schema contract; the accepted identity
+        # is a bound value. Empty required tables remain valid.
+        return tuple(
+            table_name
+            for table_name in WMS_TABLES
+            if table_name != "schema_metadata"
+            and self._connection.execute(
+                f'SELECT 1 FROM "{table_name}" '
+                "WHERE typeof(run_id) != 'text' OR run_id COLLATE BINARY IS NOT ? LIMIT 1",
+                (run_id,),
+            ).fetchone()
+            is not None
+        )
 
     def facility_identity(self) -> tuple[str, str]:
         row = self._connection.execute("SELECT facility_id, facility_name FROM facility").fetchone()

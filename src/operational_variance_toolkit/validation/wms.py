@@ -130,6 +130,8 @@ def validate_wms_dataset(
     if failures:
         return ValidationResult(tuple(failures))
     failures.extend(_validate_metadata(repository))
+    if failures:
+        return ValidationResult(tuple(failures))
     failures.extend(_validate_foreign_keys(repository))
     failures.extend(_validate_item_master(connection))
     failures.extend(_validate_location_master(connection))
@@ -175,7 +177,12 @@ def _validate_schema(
                 )
             )
     for table_name in WMS_TABLES:
-        forbidden = sorted(repository.table_columns(table_name) & _FORBIDDEN_COLUMNS)
+        columns = repository.table_columns(table_name)
+        if table_name != "schema_metadata" and "run_id" not in columns:
+            failures.append(
+                ValidationIssue("schema", f"{table_name} missing required column(s): run_id")
+            )
+        forbidden = sorted(columns & _FORBIDDEN_COLUMNS)
         if forbidden:
             failures.append(
                 ValidationIssue(
@@ -192,11 +199,17 @@ def _validate_metadata(repository: WmsFoundationRepository) -> list[ValidationIs
     except sqlite3.DatabaseError as exc:
         return [ValidationIssue("metadata", str(exc))]
     failures: list[ValidationIssue] = []
+    if not isinstance(metadata.run_id, str) or not metadata.run_id:
+        return [ValidationIssue("metadata", "Run identity must be a nonempty string")]
     if metadata.schema_version != WMS_SCHEMA_VERSION:
         failures.append(ValidationIssue("metadata", "Run schema_version is not 3.0.0"))
     if metadata.simulation_start_utc >= metadata.simulation_end_utc:
         failures.append(
             ValidationIssue("metadata", "simulation_start_utc must precede simulation_end_utc")
+        )
+    for table_name in repository.conflicting_run_tables(metadata.run_id):
+        failures.append(
+            ValidationIssue("metadata", f"{table_name} contains a conflicting run identity")
         )
     return failures
 
