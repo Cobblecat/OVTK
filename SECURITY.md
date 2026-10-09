@@ -2,6 +2,8 @@
 
 OVTK is a local toolkit for deterministic synthetic warehouse operations and inventory-variance investigation. It is not designed as a production WMS or a hosted service.
 
+A trusted operator may select a database, analytical artifact bundle, or prepared release workspace supplied by another person. Treat its contents as untrusted data at the database, serialization, reporting, filesystem, and output boundaries. Assess impact using the actual local workflow and attacker prerequisites.
+
 ## Reporting a vulnerability
 
 Use **Report a vulnerability** on the [security advisories page](https://github.com/Cobblecat/OVTK/security/advisories) to send a private report to the repository maintainer, Cobblecat. Please keep potential vulnerabilities out of public issues until the report has been reviewed and a disclosure plan agreed.
@@ -22,11 +24,13 @@ If private reporting is unavailable, open an issue requesting a private contact 
 
 Security fixes are recorded in the [changelog](CHANGELOG.md) with their source commits. Reports against current `main` are welcome; identify the exact revision so the behavior can be reproduced.
 
+The separate [security remediation status](docs/security/REMEDIATION_STATUS.md) tracks eight open findings, preservation of the three earlier patches, and the phase review decisions. Foundations committed to a remediation branch are not finding closure or acceptance of every workflow. The status document distinguishes recorded test results from independent review and deferred qualification.
+
 A source fix does not establish that an older ZIP or generated release artifact contains the fix. Historical version `0.1.0` archives and preparation snapshots must be checked against their recorded revision. No maintained backport schedule or response-time guarantee is established.
 
-## Security boundaries and review priorities
+## Security requirements and review priorities
 
-Review changes against these project requirements:
+Review changes against these project requirements. They are required properties, not an assertion that every current path already satisfies them; implementation and acceptance status are recorded in the remediation status document.
 
 - Accepted source databases and historical artifacts remain immutable. Ordinary inquiry and analysis use read-only connections.
 - Sandbox identity and provenance must be verified before a sandbox workflow is accepted. Sandbox mode does not authorize arbitrary SQL or unrestricted writes.

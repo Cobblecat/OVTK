@@ -66,6 +66,14 @@ dispositions without accepting restricted ground truth. The release layer builds
 the thin executed notebook, traceable figures, executive report, technical
 appendix, and separate leakage-checked source and optional truth archives.
 
+### Security remediation status
+
+A separate security remediation is in progress. Its phase numbers describe security work and are distinct from the feature milestones above. Phase 1 foundations, including the CPython/native x64 publication qualifier, were accepted at [`5596678`](https://github.com/Cobblecat/OVTK/commit/5596678448e54a20b1f3ec7fa2d9f3caaed9ec0c) on `remediation/phase1-foundations` for the recorded Windows configuration. Phase 2 entry is approved after this documentation update is integrated. The eight findings are not yet closed.
+
+The earlier PDF text, WMS CSV, and terminal escaping fixes remain part of the compatibility and regression requirements. Analytical CSV writer changes, bound reporting, database workflow adoption, output publication migration, and confined release capture require their later gates. A source commit does not establish that a downloaded ZIP contains the fix.
+
+See [security remediation status](docs/security/REMEDIATION_STATUS.md) for finding coverage, commits, review decisions, evidence, and platform limitations, and [SECURITY.md](SECURITY.md) for private reporting. The initial publication qualification targets Windows 11 25H2 Home/Core x64, local fixed NTFS, and CPython 3.14.x. Native POSIX qualification remains deferred; this is not a claim that all current workflows or later Windows builds have been qualified.
+
 ## Quick start
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and use Python 3.14 or newer. From a new local checkout:
@@ -84,7 +92,7 @@ Choose a new output path when repeating generation. At the console prompt, use `
 
 ## Public command examples
 
-Commands refuse to overwrite existing output files or directories. Choose new paths for each run.
+Choose new output paths for each run. The security remediation is migrating output producers to shared, concurrency-safe no-replace publication; see the status document for the remaining work and qualification limits.
 
 ```powershell
 uv run operational-variance-toolkit config-check --config configs/baseline.toml
@@ -150,9 +158,9 @@ A release reviewer can:
 
 ## License
 
-The project is released under the [MIT License](LICENSE). Version `0.1.0` is distributed as a local
+The project is released under the [MIT License](LICENSE). The documented `0.1.0` packaging layout uses a local
 versioned source ZIP plus a deliberately separate optional restricted-ground-truth ZIP. No XLSX
-packet is included.
+packet is included. Security remediation commits and acceptance do not by themselves establish a patched distributed archive.
 
 ## Documentation
 
