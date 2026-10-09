@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
 from operational_variance_toolkit.config import ProjectConfig
 from operational_variance_toolkit.domain.run import build_neutral_run_id, build_run_record
-from operational_variance_toolkit.errors import DatabaseError, OutputExistsError
+from operational_variance_toolkit.errors import DatabaseError, OutputExistsError, ReadSnapshotError
 from operational_variance_toolkit.storage.schema import (
     SCHEMA_BY_VERSION,
     SCHEMA_VERSION,
@@ -82,9 +85,139 @@ def connect_readonly_database(path: str | Path) -> sqlite3.Connection:
     database_path = Path(path).resolve()
     uri = f"{database_path.as_uri()}?mode=ro"
     connection = sqlite3.connect(uri, uri=True)
-    connection.execute("PRAGMA foreign_keys = ON")
-    connection.execute("PRAGMA query_only = ON")
+    try:
+        connection.execute("PRAGMA foreign_keys = ON")
+        connection.execute("PRAGMA query_only = ON")
+    except BaseException:
+        connection.close()
+        raise
     return connection
+
+
+@dataclass(frozen=True, slots=True)
+class ReadIdentity:
+    """Canonical identity returned by the caller's schema and role validator."""
+
+    run_id: str
+    schema_version: str
+
+    def __post_init__(self) -> None:
+        if not all(
+            isinstance(value, str) and value for value in (self.run_id, self.schema_version)
+        ):
+            raise ReadSnapshotError("Snapshot validator must supply a run and schema identity")
+
+
+@dataclass(frozen=True, slots=True)
+class SQLiteReadLimits:
+    """Explicit per-invocation limits; no product profile or default is implied."""
+
+    role: str
+    value_bytes: int
+    columns: int
+    sql_bytes: int
+    progress_steps: int
+    progress_calls: int
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.role, str) or not self.role:
+            raise ReadSnapshotError("Snapshot limits require a role")
+        values = (
+            self.value_bytes,
+            self.columns,
+            self.sql_bytes,
+            self.progress_steps,
+            self.progress_calls,
+        )
+        if any(type(value) is not int or not 0 < value <= 2**31 - 1 for value in values):
+            raise ReadSnapshotError("Snapshot limits must be positive SQLite-sized integers")
+
+
+@dataclass(frozen=True, slots=True)
+class AcceptedReadSnapshot:
+    connection: sqlite3.Connection
+    identity: ReadIdentity
+
+
+def _read_authorizer(
+    action: int, first: str | None, second: str | None, database: str | None, trigger: str | None
+) -> int:
+    # Repositories receive a normal Connection, but SQL cannot end the accepted
+    # transaction, attach another database, or turn query_only off.
+    if action in {
+        sqlite3.SQLITE_TRANSACTION,
+        sqlite3.SQLITE_SAVEPOINT,
+        sqlite3.SQLITE_ATTACH,
+        sqlite3.SQLITE_DETACH,
+    }:
+        return sqlite3.SQLITE_DENY
+    if action == sqlite3.SQLITE_PRAGMA and second is not None:
+        if (first or "").lower() not in {
+            "table_info",
+            "table_xinfo",
+            "foreign_key_list",
+            "foreign_key_check",
+            "index_info",
+            "index_xinfo",
+            "index_list",
+            "integrity_check",
+            "quick_check",
+        }:
+            return sqlite3.SQLITE_DENY
+    return sqlite3.SQLITE_OK
+
+
+@contextmanager
+def accepted_read_snapshot(
+    path: str | Path,
+    *,
+    validator: Callable[[sqlite3.Connection], ReadIdentity],
+    limits: SQLiteReadLimits,
+) -> Iterator[AcceptedReadSnapshot]:
+    """Accept and read one bounded view; close it on every success/failure path.
+
+    The mandatory role validator owns schema support and identity acceptance.
+    Legacy callers migrate in Phase 2; this API has no unvalidated mode.
+    Progress accounting is cumulative across validation and result queries.
+    """
+    if not isinstance(limits, SQLiteReadLimits) or not callable(validator):
+        raise ReadSnapshotError("Snapshot acceptance requires a validator and supplied limits")
+    connection = None
+    calls = 0
+
+    def progress() -> int:
+        nonlocal calls
+        calls += 1
+        return int(calls > limits.progress_calls)
+
+    try:
+        connection = connect_readonly_database(path)
+        for category, value in (
+            (sqlite3.SQLITE_LIMIT_LENGTH, limits.value_bytes),
+            (sqlite3.SQLITE_LIMIT_COLUMN, limits.columns),
+            (sqlite3.SQLITE_LIMIT_SQL_LENGTH, limits.sql_bytes),
+        ):
+            connection.setlimit(category, value)
+            if connection.getlimit(category) != value:
+                raise ReadSnapshotError(f"SQLite cannot apply the supplied {limits.role} limits")
+        connection.set_progress_handler(progress, limits.progress_steps)
+        connection.execute("BEGIN")
+        connection.execute("PRAGMA schema_version").fetchone()  # Establish the read view now.
+        connection.set_authorizer(_read_authorizer)
+        identity = validator(connection)
+        if not isinstance(identity, ReadIdentity):
+            raise ReadSnapshotError("Snapshot validator did not return an accepted identity")
+        yield AcceptedReadSnapshot(connection, identity)
+    except sqlite3.DatabaseError as exc:
+        raise ReadSnapshotError(f"Read snapshot failed for role {limits.role}: {exc}") from exc
+    finally:
+        if connection is not None:
+            connection.set_authorizer(None)
+            connection.set_progress_handler(None, 0)
+            try:
+                connection.rollback()
+            finally:
+                connection.close()
 
 
 def database_user_version(path: str | Path) -> int:

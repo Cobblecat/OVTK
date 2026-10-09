@@ -31,6 +31,24 @@ class DataValidationError(ToolkitError):
     exit_code = 6
 
 
+class AnalyticalFormatError(DataValidationError):
+    """Raised when an analytical manifest or encoded text is unsupported."""
+
+
+class ReadSnapshotError(DatabaseError):
+    """Raised when acceptance or bounded reading of a snapshot fails."""
+
+
+class PublicationError(ToolkitError):
+    """Raised when publish-new cannot provide its required guarantees."""
+
+    exit_code = 5
+
+
+class PublicationOwnershipError(PublicationError):
+    """Raised when private staging cannot safely be cleaned or published."""
+
+
 class RecordNotFoundError(DataValidationError):
     """Raised when a factual schema-3 inquiry has no matching record."""
 
