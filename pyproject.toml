@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "operational-variance-toolkit"
+version = "0.1.0"
+description = "Deterministic synthetic warehouse data and inventory variance investigation toolkit"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.14"
+dependencies = [
+    "ipykernel>=7",
+    "matplotlib>=3.10",
+    "nbclient>=0.10",
+    "nbformat>=5.10",
+    "numpy>=2.0",
+    "pandas>=2.3",
+    "prompt-toolkit>=3.0.53,<4",
+    "pypdf>=6",
+    "reportlab>=4.4",
+    "scipy>=1.16",
+    "statsmodels>=0.14.5",
+    "tzdata>=2025.2",
+]
+
+[project.scripts]
+operational-variance-toolkit = "operational_variance_toolkit.cli:main"
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.21,<7",
+    "pytest>=9",
+    "ruff>=0.16",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/operational_variance_toolkit"]
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]

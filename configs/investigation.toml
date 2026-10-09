@@ -1,0 +1,49 @@
+[run]
+scenario_name = "investigation"
+scenario_version = "0.2.0"
+seed = 20260801
+start_local = "2026-05-04T03:00:00"
+end_local = "2026-05-14T15:00:00"
+facility_timezone = "America/New_York"
+
+[facility]
+facility_id = "FAC-001"
+name = "Synthetic Grocery Distribution Center"
+
+[dimensions]
+zone_count = 3
+item_count = 96
+selector_count = 18
+replenisher_count = 7
+qa_operator_count = 3
+shift_count = 10
+
+[storage]
+database_path = "artifacts/data/investigation.sqlite3"
+ground_truth_directory = "artifacts/restricted_ground_truth"
+export_directory = "artifacts/exports"
+
+[operations]
+trip_count = 140
+pick_lines_per_trip_min = 6
+pick_lines_per_trip_max = 10
+short_probability = 0.005
+qa_event_count = 8
+damage_event_count = 3
+adjustment_count = 4
+system_event_count = 4
+
+[failures.replenishment_gap]
+enabled = true
+target_item_count = 6
+forced_short_count = 28
+recovery_adjustment_count = 8
+
+[failures.qa_masking]
+enabled = true
+event_count = 10
+generic_adjustment_count = 10
+
+[failures.selector_false_lead]
+enabled = true
+exposure_trip_count = 28

@@ -1,0 +1,34 @@
+[run]
+scenario_name = "baseline"
+scenario_version = "0.1.0"
+seed = 20260801
+start_local = "2026-05-04T03:00:00"
+end_local = "2026-05-14T15:00:00"
+facility_timezone = "America/New_York"
+
+[facility]
+facility_id = "FAC-001"
+name = "Synthetic Grocery Distribution Center"
+
+[dimensions]
+zone_count = 3
+item_count = 96
+selector_count = 18
+replenisher_count = 7
+qa_operator_count = 3
+shift_count = 10
+
+[storage]
+database_path = "artifacts/data/baseline.sqlite3"
+ground_truth_directory = "artifacts/restricted_ground_truth"
+export_directory = "artifacts/exports"
+
+[operations]
+trip_count = 120
+pick_lines_per_trip_min = 6
+pick_lines_per_trip_max = 10
+short_probability = 0.005
+qa_event_count = 8
+damage_event_count = 3
+adjustment_count = 4
+system_event_count = 4

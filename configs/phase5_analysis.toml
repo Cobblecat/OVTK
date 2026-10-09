@@ -1,0 +1,36 @@
+[analysis]
+contract_version = "1.0.0"
+target_selector_id = "OP-0002"
+eligible_pick_flag = 1
+primary_outcome = "short_indicator"
+cluster_column = "trip_id"
+confidence_level = 0.95
+
+[operational_condition]
+zone_code = "CHILLED"
+velocity_class = "A"
+aisle_codes = ["A1", "A2", "A3"]
+
+[event_windows]
+primary_replenishment_minutes = 120
+replenishment_sensitivity_minutes = [60, 240]
+qa_primary_hours = 4
+qa_sensitivity_hours = [1, 24]
+
+[attenuation]
+minimum_proportional_reduction = 0.50
+maximum_residual_risk_difference_pp = 2.0
+
+[comparison]
+database = "artifacts/data/schema3_baseline_accepted.sqlite3"
+reconstruction = "artifacts/analysis/schema3_baseline_accepted"
+
+[model]
+family = "binomial_logit"
+covariance = "cluster_trip"
+fallback = "linear_probability_hc3"
+include_day_index = true
+include_shift = true
+include_velocity = true
+include_requested_quantity = true
+include_recorded_replenishment_status = true
