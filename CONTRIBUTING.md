@@ -37,6 +37,12 @@ Preserve:
 
 Follow the [architecture](docs/03_ARCHITECTURE.md) and applicable phase contracts. New metrics or report claims require tested package functions and traceable source references. Keep generated databases, reports, restricted truth, virtual environments, and scratch files out of commits.
 
+## Public documentation and change descriptions
+
+Use product-focused technical language in repository files, commit messages, issues, advisories, and release notes. Explain behavior, compatibility, diagnostics, and verification evidence. Refer to review decisions as maintainer decisions.
+
+Keep internal session identifiers, local workspace paths, implementation-session branding, authorship boilerplate, and internal role labels in working records outside the repository. Use neutral technical identifiers for findings. Preserve accurate dependency names and required legal attribution.
+
 ## Submit a pull request
 
 Keep the change focused. Explain the problem, resulting behavior, and relevant compatibility or migration effects. Add regression coverage for behavioral changes and update documentation when users need different instructions.
