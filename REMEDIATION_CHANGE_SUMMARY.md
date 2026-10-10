@@ -42,7 +42,21 @@ security-test contracts preserved. Canonical values and numeric objects remain
 unchanged. WMS presentation CSV apostrophe encoding remains non-reversible; it
 must not be stripped or combined with the analytical codec.
 
-### Next approved work and remaining gates
+### Current calibration hold
+
+The temporary Windows measurement harness has not passed its process-containment
+preflight. The latest safety-only diagnostic stopped after observing an additional
+distinct process in its owned Windows Job. The effective process-limit behavior
+and workload-admission contract remain unresolved. Cleanup passed for that attempt
+only; no OVTK workload measurements ran, and the accepted repository bytes remained
+unchanged.
+
+Further execution and implementation are paused pending review of this qualification
+issue; the recurring schedule is paused. The checkpoint 5 identity acceptance stands.
+This observation establishes no new OVTK defect, resource profile or phase acceptance.
+G2, full F3 qualification and Phase 3 entry remain held.
+
+### Remaining Phase 2 work and later gates
 
 - Integrate accepted snapshots into WMS describe/report readers and demonstrate
   that identity validation and result reads use the same accepted connection and
